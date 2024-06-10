@@ -13,5 +13,10 @@ namespace Ex03.GarageLogic
         { 
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
+
+        public void InsertVehicle(string i_Name, Vehicle i_Vehicle)
+        {
+
+        } 
     }
 }
