@@ -14,9 +14,58 @@ namespace Ex03.GarageLogic
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
 
-        public void InsertVehicle(string i_Name, Vehicle i_Vehicle)
+        public void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
+        {
+            r_VehiclesInGarage.Add(i_LicenseNumber, i_Vehicle);
+        } 
+
+        public bool IsVehicleInGarage(string i_LicenseNumber)
+        {
+            bool isVehicleInGarage = r_VehiclesInGarage.ContainsKey(i_LicenseNumber);
+
+            return isVehicleInGarage;
+        }
+
+        public void CreateNewVehicle()
         {
 
-        } 
+        }
+
+        public Vehicle GetVehicle(string i_LicenseNumber)
+        {
+            Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
+
+            return vehicle;
+        }
+
+        public List<string> FilterVehicles(eVehicleStatus i_Status)
+        {
+            List<string> listOfFilteredLicenseNumbers = new List<string>();
+
+            foreach (Vehicle vehicle in r_VehiclesInGarage.Values)
+            {
+                if (vehicle.VehicleStatus == i_Status)
+                {
+                    listOfFilteredLicenseNumbers.Add(vehicle.LicenseNumber);
+                }
+            }
+
+            return listOfFilteredLicenseNumbers;
+        }
+        
+        public void ChangeStatus(eVehicleStatus i_NewStatus, string i_LicenseNumber)
+        {
+            r_VehiclesInGarage[i_LicenseNumber].VehicleStatus = i_NewStatus;
+        }
+
+        public void PumpTires(string i_LicenseNumber)
+        {
+            r_VehiclesInGarage[i_LicenseNumber].PumpTires();
+        }
+
+        public void Refuel(string i_LicenseNumber, eFuelType i_FuelType, float i_LitersToAdd)
+        {
+
+        }
     }
 }
