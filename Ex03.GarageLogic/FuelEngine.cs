@@ -9,11 +9,11 @@ namespace Ex03.GarageLogic
 {
     public class FuelEngine
     {
-        private readonly FuelType r_FuelType;
+        private readonly eFuelType r_FuelType;
         private float m_CurrentFuel;
         private readonly float r_MaxFuel;
 
-        public FuelType FuelType
+        public eFuelType FuelType
         {
             get { return r_FuelType; }
 
@@ -25,14 +25,14 @@ namespace Ex03.GarageLogic
             set { m_CurrentFuel = value; }
         }
 
-        public FuelEngine(FuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
+        public FuelEngine(eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
         {
             r_FuelType = i_FuelType;
             m_CurrentFuel = i_CurrentFuel;
             r_MaxFuel = i_MaxFuel;
         }
 
-        public void FillUp(float i_FuelAmount, FuelType i_FuelType)
+        public void FillUp(float i_FuelAmount, eFuelType i_FuelType)
         {
             if (r_FuelType != FuelType)
             {
