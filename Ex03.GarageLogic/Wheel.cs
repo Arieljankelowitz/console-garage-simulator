@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
@@ -18,13 +14,13 @@ namespace Ex03.GarageLogic
         public string ManufacturName
         {
             get { return r_ManufacturName; }
-            
+
         }
 
         public float CurrentAirPressure
         {
             get { return m_CurrentAirPressure; }
-            set { CurrentAirPressure = value;  }
+            set { CurrentAirPressure = value; }
         }
 
         public float MaxAirPressure
@@ -39,7 +35,7 @@ namespace Ex03.GarageLogic
             r_ManufacturName = i_ManufacturName;
             // maybe to do a and exception check here
             r_MaxAirPressure = i_MaxAirPressure;
-            
+
             if (i_CurrentAirPressure > r_MaxAirPressure)
             {
                 //need to check if this is the correct exception and how to handle them
@@ -48,7 +44,7 @@ namespace Ex03.GarageLogic
             m_CurrentAirPressure = i_CurrentAirPressure;
         }
 
-            internal void PumpTire()
+        internal void PumpTire()
         {
             m_CurrentAirPressure = r_MaxAirPressure;
         }

@@ -24,8 +24,16 @@ namespace Ex03.GarageLogic
         public eVehicleStatus VehicleStatus { get { return m_VehicleStaus; } set { m_VehicleStaus = value; } }
         public eEngineType EngineType { get { return r_EngineType; } }
 
-        public Vehicle()
+        public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, List<Wheel> i_Wheels)
         {
+            r_ModelName = i_ModelName;
+            r_LicenseNumber = i_LicenseNumber;
+            r_EngineType = i_EngineType;
+            m_Owner = i_Owner;
+            m_PhoneNumber = i_PhoneNumber;
+            m_VehicleStaus = eVehicleStatus.InRepair;
+            m_RemainingEnergy = 100;
+            r_Wheels = i_Wheels;
 
         }
 
