@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
-{ 
-public enum FuelType
 {
-    Soler,
-    Octane95,
-    Octane96,
-    Octane98
+    public enum eFuelType
+    {
+        Soler,
+        Octane95,
+        Octane96,
+        Octane98
+    }
 }
