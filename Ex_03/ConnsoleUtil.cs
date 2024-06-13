@@ -63,11 +63,74 @@ namespace Ex_03
             return i_Options[currentSelectedOption];
         }
 
-       internal static void NewElectric()
+        internal (float maxBatteryLife, float currentBatteryLife) NewElectric()
         {
+            (float maxBatteryLife, float currentBatteryLife) electricProperties = (0.0f, 0.0f);
 
+            Console.WriteLine("Please enter the Max battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
+            string maxTime = Console.ReadLine();
+
+            try
+            {
+                electricProperties.maxBatteryLife = convertTimeToHours(maxTime);
+                Console.WriteLine($"The maximum battery life in hours is: {electricProperties.maxBatteryLife:F2} hours.");
+
+                Console.WriteLine("Please enter the current battery life in hours (Separated by a ':' Eg 1 hour and 30 min is 1:30): ");
+                string currentTime = Console.ReadLine();
+
+                electricProperties.currentBatteryLife = convertTimeToHours(currentTime);
+                validateBatteryLife(electricProperties.currentBatteryLife, electricProperties.maxBatteryLife);
+
+                Console.WriteLine($"The current battery life is: {electricProperties.currentBatteryLife:F2} hours, and it is within the max capacity of {electricProperties.maxBatteryLife:F2} hours.");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return electricProperties;
         }
+        private static void validateBatteryLife(float i_currentBatteryLife, float i_maxBatteryLife)
+        {
+            if (i_currentBatteryLife < 0)
+            {
+                throw new ArgumentException("Current battery life cannot be negative.");
+            }
 
+            if (i_currentBatteryLife > i_maxBatteryLife)
+            {
+                throw new ArgumentException("Current battery life cannot exceed max battery life.");
+            }
+        }
+    
+
+    private static float convertTimeToHours(string i_TimeInHours)
+        {
+            var parts = i_TimeInHours.Split(':');
+
+            if (parts.Length != 2)
+            {
+                throw new FormatException("Invalid format. The correct format is 'hours:minutes'.");
+            }
+            if (!int.TryParse(parts[0], out int out_Hours))
+            {
+                throw new FormatException("Invalid format for hours. Please enter a valid integer.");
+            }
+
+            if (!int.TryParse(parts[1], out int out_Minutes))
+            {
+                throw new FormatException("Invalid format for minutes. Please enter a valid integer.");
+            }
+
+            if (out_Minutes < 0 || out_Minutes >= 60)
+            {
+                throw new FormatException("Minutes should be between 0 and 59.");
+            }
+            float timeInMin = out_Hours + (out_Minutes / 60f);
+            return timeInMin;
+        }
+            
+        
         internal static void NewFuel() { }
 
         internal static (eColor color, int numOfDoors) NewCar() 
