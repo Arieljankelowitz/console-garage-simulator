@@ -63,48 +63,50 @@ namespace Ex_03
             return i_Options[currentSelectedOption];
         }
 
-        internal (float maxBatteryLife, float currentBatteryLife) NewElectric()
+        internal static (float maxBatteryLife, float currentBatteryLife) NewElectric()
         {
             (float maxBatteryLife, float currentBatteryLife) electricProperties = (0.0f, 0.0f);
 
-            Console.WriteLine("Please enter the Max battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
-            string maxTime = Console.ReadLine();
-
-            try
+            bool validInput = false;
+            while (!validInput)
             {
-                electricProperties.maxBatteryLife = convertTimeToHours(maxTime);
-                Console.WriteLine($"The maximum battery life in hours is: {electricProperties.maxBatteryLife:F2} hours.");
+                Console.WriteLine("Please enter the Max battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
+                string maxTime = Console.ReadLine();
 
-                Console.WriteLine("Please enter the current battery life in hours (Separated by a ':' Eg 1 hour and 30 min is 1:30): ");
+                try
+                {
+                    electricProperties.maxBatteryLife = convertTimeToHours(maxTime);
+                    validInput = true; 
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+
+            validInput = false; 
+            while (!validInput)
+            {
+                Console.WriteLine("Please enter the current battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
                 string currentTime = Console.ReadLine();
 
-                electricProperties.currentBatteryLife = convertTimeToHours(currentTime);
-                validateBatteryLife(electricProperties.currentBatteryLife, electricProperties.maxBatteryLife);
-
-                Console.WriteLine($"The current battery life is: {electricProperties.currentBatteryLife:F2} hours, and it is within the max capacity of {electricProperties.maxBatteryLife:F2} hours.");
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
+                try
+                {
+                    electricProperties.currentBatteryLife = convertTimeToHours(currentTime);
+                    validInput = true; 
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
             }
 
             return electricProperties;
         }
-        private static void validateBatteryLife(float i_currentBatteryLife, float i_maxBatteryLife)
-        {
-            if (i_currentBatteryLife < 0)
-            {
-                throw new ArgumentException("Current battery life cannot be negative.");
-            }
 
-            if (i_currentBatteryLife > i_maxBatteryLife)
-            {
-                throw new ArgumentException("Current battery life cannot exceed max battery life.");
-            }
-        }
-    
 
-    private static float convertTimeToHours(string i_TimeInHours)
+
+        private static float convertTimeToHours(string i_TimeInHours)
         {
             var parts = i_TimeInHours.Split(':');
 
@@ -131,7 +133,12 @@ namespace Ex_03
         }
             
         
-        internal static void NewFuel() { }
+        /*internal static (string fuelType, float maxFuel, float currentFuel) NewFuel() 
+        {
+           *//* (string fuelType, float maxFuel, float currentFuel) enginedData = ("", 0, 0);
+            
+            enginedData.fuelType = ChooseOption(m)*/
+       // }
 
         internal static (eColor color, int numOfDoors) NewCar() 
         {
