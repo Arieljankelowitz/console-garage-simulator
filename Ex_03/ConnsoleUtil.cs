@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace Ex_03
 
                     if (i == currentSelectedOption)
                     {
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.Green;
                     }
 
                     Console.WriteLine(i_Options[i]);
@@ -60,6 +61,35 @@ namespace Ex_03
             Console.CursorVisible = true;
 
             return i_Options[currentSelectedOption];
+        }
+
+       internal static void NewElectric()
+        {
+
+        }
+
+        internal static void NewFuel() { }
+
+        internal static (eColor color, int numOfDoors) NewCar() 
+        {
+            string[] colorOptions = { "Yellow", "White", "Red", "Gray" };
+            string colorMessage = "What color is your car? ";
+            eColor carColor = ParseEnum<eColor>(ChooseOption(colorMessage, colorOptions));
+
+            string[] doorOptions = { "2", "3", "4", "5" };
+            string doorMessage = "How many doors does your car have? ";
+            int numberOfDoors = int.Parse(ChooseOption(doorMessage, doorOptions));
+                
+            return (carColor, numberOfDoors);            
+        }
+
+        internal static void NewMotorcycle() { }
+
+        internal static void NewTruck() { }
+
+        public static T ParseEnum<T>(string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
         }
     }
 }
