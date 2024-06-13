@@ -17,7 +17,6 @@ namespace Ex03.GarageLogic
         {
             m_ContainsToxins = i_ContainsToxins;
             r_CargoTankVolume = i_CargoTankVolume;
-            r_CargoTankVolume = i_CargoTankVolume;
         }
 
         internal override void FillUp()
