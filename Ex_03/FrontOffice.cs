@@ -185,7 +185,7 @@ namespace Ex_03
 
                 if(i_VehicleType.Contains("Electric"))
                 {
-                    ConnsoleUtil.NewElectric();
+                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
                     /*m_Garage.CreateNewVehicle();*/
                 } 
                 else
@@ -202,7 +202,7 @@ namespace Ex_03
                 ConnsoleUtil.NewMotorcycle();
                 if (i_VehicleType.Contains("Electric"))
                 {
-                    ConnsoleUtil.NewElectric();
+                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
                    /* m_Garage.CreateNewVehicle();*/
                 }
                 else
@@ -216,7 +216,7 @@ namespace Ex_03
                 ConnsoleUtil.NewTruck();
                 if (i_VehicleType.Contains("Electric"))
                 {
-                    ConnsoleUtil.NewElectric();
+                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
                    /* m_Garage.CreateNewVehicle();*/
                 }
                 else
