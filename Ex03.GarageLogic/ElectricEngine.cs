@@ -28,11 +28,24 @@ namespace Ex03.GarageLogic
 
         public void FillUp(float i_AmountOfCharge)
         {
-            if((i_AmountOfCharge + m_RemainingBatteryLife) > r_MaxBatteryLife)
+            if ((i_AmountOfCharge + m_RemainingBatteryLife) > r_MaxBatteryLife)
             {
                 throw new ArgumentOutOfRangeException("you trying to charge to much");
             }
             m_RemainingBatteryLife += i_AmountOfCharge;
+        }
+        private string convertToHoursAndMinutes(float i_Hours)
+        {
+            int hours = (int)i_Hours;
+            int minutes = (int)((i_Hours - hours) * 60);
+            return string.Format("{0} hours and {1} minutes", hours, minutes);
+        }
+        public override string ToString()
+        {
+            return string.Format(
+                "Electric Engine:\n    Remaining Battery Life: {0}\n    Max Battery Life: {1}",
+                convertToHoursAndMinutes(m_RemainingBatteryLife),
+                convertToHoursAndMinutes(r_MaxBatteryLife));
         }
     }
 

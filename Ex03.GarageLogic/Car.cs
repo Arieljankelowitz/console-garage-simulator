@@ -22,11 +22,12 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
+            string baseInfo = base.ToString();
             string output = string.Format(@"
     Car Specs
-        Color: {0},
+        Color: {0}
         Number of Doors: {1}
-", m_CarColor, r_NumberOfDoors); 
+{2}", m_CarColor, r_NumberOfDoors, baseInfo);
 
             return output;
         }

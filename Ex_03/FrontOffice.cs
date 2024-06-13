@@ -122,7 +122,7 @@ namespace Ex_03
             string chosenFuelString = ConnsoleUtil.ChooseOption(fuelMessage, fuelOptions).Replace(" ", "");
             eFuelType chosenFuel = ConnsoleUtil.ParseEnum<eFuelType>(chosenFuelString);
             Console.WriteLine("How many ltrs to add?");
-            int litersToAdd = int.Parse(Console.ReadLine()); //make this a util method so we can error check it
+            int litersToAdd = int.Parse(Console.ReadLine()); 
             
             try
             {
@@ -192,8 +192,9 @@ namespace Ex_03
                 } 
                 else
                 {
-                    /*ConnsoleUtil.NewFuel();*/
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber);
+                    //fix the type matche
+                   (string typeOfFuel, float maxFuel, float currentFuel ) = ConnsoleUtil.NewFuel();
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, 0 ,0, eFuelType.Octane96, currentFuel, maxFuel);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
                     ConnsoleUtil.BlankSpace();

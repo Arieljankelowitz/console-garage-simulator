@@ -28,11 +28,12 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
+            string baseInfo = base.ToString();
             string output = string.Format(@"
     Motorcycle Specs
-        License Type: {0},
+        License Type: {0}
         Engine Volume: {1}cc
-", r_LicenseType, r_EngineVolume);
+{2}", r_LicenseType, r_EngineVolume, baseInfo);
 
             return output;
         }

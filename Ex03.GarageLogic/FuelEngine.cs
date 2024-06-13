@@ -56,5 +56,12 @@ namespace Ex03.GarageLogic
             }
 
         }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "Fuel Engine:\n    Fuel Type: {0}\n    Current Fuel: {1} liters\n    Max Fuel Capacity: {2} liters",
+                r_FuelType, m_CurrentFuel, r_MaxFuel);
+        }
     }
 }

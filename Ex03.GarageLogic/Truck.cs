@@ -24,17 +24,20 @@ namespace Ex03.GarageLogic
            
         }
 
+      
         public override string ToString()
         {
+            string baseInfo = base.ToString();
             string output = string.Format(@"
-    Truck specs
-        Contains Dangerous Materials: {0},
-        Cargo Tank Volume: {1}
-", m_ContainsToxins, r_CargoTankVolume);
+    Truck Specs
+        Contains Toxins: {0}
+        Cargo Tank Volume: {1} liters
+{2}", m_ContainsToxins, r_CargoTankVolume, baseInfo);
 
             return output;
-
         }
 
     }
+
+    
 }

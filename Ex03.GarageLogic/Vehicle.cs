@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Ex03.GarageLogic
 {
@@ -24,6 +25,7 @@ namespace Ex03.GarageLogic
         public float RemainingEnergy { get { return m_RemainingEnergy; } set { m_RemainingEnergy = value; } }
         public eVehicleStatus VehicleStatus { get { return m_VehicleStaus; } set { m_VehicleStaus = value; } }
         public eEngineType EngineType { get { return r_EngineType; } }
+        public object Engine { get { return r_Engine; } }
 
         public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, 
             List<Wheel> i_Wheels, object i_Engine)
@@ -51,17 +53,24 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
+            StringBuilder wheelsInfo = new StringBuilder();
+            foreach (Wheel wheel in r_Wheels)
+            {
+                wheelsInfo.AppendLine(wheel.ToString());
+            }
+
+            string engineInfo = r_Engine != null ? r_Engine.ToString() : "None";
 
             string output = string.Format(@"
     License Number: {0}
     Model: {1}
     Owner: {2}
     Status: {3}
-
-    Specs:
-        Tires: {4}, {5}psi (current: {6}psi)
-        Engine Type: {7}
-");
+    Remaining Energy: {4}%
+    Engine Type: {5}
+    Engine: {6}
+    Wheels: 
+{7}", r_LicenseNumber, r_ModelName, m_Owner, m_VehicleStaus, m_RemainingEnergy, r_EngineType, engineInfo, wheelsInfo);
 
             return output;
         }

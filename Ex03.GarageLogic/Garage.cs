@@ -108,20 +108,56 @@ namespace Ex03.GarageLogic
         }
 
         public void Refuel(string i_LicenseNumber, eFuelType i_FuelType, float i_LitersToAdd)
-        {
-            //to do
+        
+            {
+                if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
+                {
+                    throw new ArgumentException("Vehicle not found in the garage.");
+                }
+
+                Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
+
+
+                FuelEngine fuelEngine = (FuelEngine)vehicle.Engine;
+
+                fuelEngine.FillUp(i_LitersToAdd, i_FuelType);
+            
         }
 
         public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
         {
-            //to do
+            {
+                if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
+                {
+                    throw new ArgumentException("Vehicle not found in the garage.");
+                }
+
+                Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
+
+                if (!(vehicle.Engine is ElectricEngine))
+                {
+                    throw new ArgumentException("This vehicle does not have an electric engine.");
+                }
+
+                ElectricEngine electricEngine = (ElectricEngine)vehicle.Engine;
+
+
+                float chargeToAdd = (float)i_MinutestoCharge / 60;
+
+                electricEngine.FillUp(chargeToAdd);
+            }
         }
 
         public string DisplayVehicle(string i_LicenseNumber)
         {
-            Vehicle vehicle = GetVehicle(i_LicenseNumber);
-
-            return vehicle.ToString(); 
+            if (r_VehiclesInGarage.TryGetValue(i_LicenseNumber, out Vehicle vehicle))
+            {
+                return vehicle.ToString();
+            }
+            else
+            {
+                return "Vehicle not found.";
+            }
         }
     }
 }
