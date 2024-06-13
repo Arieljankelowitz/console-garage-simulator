@@ -47,5 +47,22 @@ namespace Ex03.GarageLogic
 
         internal abstract void FillUp();
 
+        public override string ToString()
+        {
+
+            string output = string.Format(@"
+    License Number: {0}
+    Model: {1}
+    Owner: {2}
+    Status: {3}
+
+    Specs:
+        Tires: {4}, {5}psi (current: {6}psi)
+        Engine Type: {7}
+");
+
+            return output;
+        }
+
     }
 }

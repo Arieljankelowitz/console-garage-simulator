@@ -68,5 +68,10 @@ namespace Ex03.GarageLogic
         {
 
         }
+
+        public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
+        {
+
+        }
     }
 }
