@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnsoleUtil.cs" />
+    <Compile Include="FrontOffice.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

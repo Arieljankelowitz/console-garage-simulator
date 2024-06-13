@@ -10,17 +10,19 @@ namespace Ex03.GarageLogic
     {
         private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
 
+        public List<string> VehiclesInGarage { get { return new List<string>(r_VehiclesInGarage.Keys); } } 
+
         public Garage() 
         { 
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
 
-        internal void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
+        private void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
         {
             r_VehiclesInGarage.Add(i_LicenseNumber, i_Vehicle);
         } 
 
-       internal bool IsVehicleInGarage(string i_LicenseNumber)
+        public bool IsVehicleInGarage(string i_LicenseNumber)
         {
             bool isVehicleInGarage = r_VehiclesInGarage.ContainsKey(i_LicenseNumber);
 
@@ -29,10 +31,12 @@ namespace Ex03.GarageLogic
 
         public void CreateNewVehicle()
         {
+            Vehicle newVehicle = null;
 
+            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-        internal Vehicle GetVehicle(string i_LicenseNumber)
+        public Vehicle GetVehicle(string i_LicenseNumber)
         {
             Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
 
@@ -50,6 +54,7 @@ namespace Ex03.GarageLogic
                     listOfFilteredLicenseNumbers.Add(vehicle.LicenseNumber);
                 }
             }
+            
 
             return listOfFilteredLicenseNumbers;
         }
