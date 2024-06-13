@@ -18,6 +18,10 @@ namespace Ex03.GarageLogic
         public ElectricEngine(float i_maxBatteryLife, float i_RemainingBatteryLife)
         {
             r_MaxBatteryLife = i_maxBatteryLife;
+            if (i_RemainingBatteryLife > i_maxBatteryLife)
+            {
+                throw new ArgumentOutOfRangeException("Exceeded the Maximum battery");
+            }
             m_RemainingBatteryLife = i_RemainingBatteryLife;
 
         }

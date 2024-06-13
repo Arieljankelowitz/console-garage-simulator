@@ -79,7 +79,7 @@ namespace Ex_03
                 string currentTime = Console.ReadLine();
 
                 electricProperties.currentBatteryLife = convertTimeToHours(currentTime);
-                validateBatteryLife(electricProperties.currentBatteryLife, electricProperties.maxBatteryLife);
+                
 
                 Console.WriteLine($"The current battery life is: {electricProperties.currentBatteryLife:F2} hours, and it is within the max capacity of {electricProperties.maxBatteryLife:F2} hours.");
             }
@@ -90,18 +90,7 @@ namespace Ex_03
 
             return electricProperties;
         }
-        private static void validateBatteryLife(float i_currentBatteryLife, float i_maxBatteryLife)
-        {
-            if (i_currentBatteryLife < 0)
-            {
-                throw new ArgumentException("Current battery life cannot be negative.");
-            }
 
-            if (i_currentBatteryLife > i_maxBatteryLife)
-            {
-                throw new ArgumentException("Current battery life cannot exceed max battery life.");
-            }
-        }
     
 
     private static float convertTimeToHours(string i_TimeInHours)
