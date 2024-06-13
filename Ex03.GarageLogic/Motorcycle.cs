@@ -13,9 +13,9 @@ namespace Ex03.GarageLogic
         private readonly eLicenseType r_LicenseType;
 
         public Motorcycle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
-                                        string i_ModelName, string i_Owner, string i_PhoneNumber)
+                                        string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
             : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, 
-                                Utils.InitializeWheels(new Wheel("China", 31, 31), 2))
+                                Utils.InitializeWheels(new Wheel("China", 31, 31), 2), i_Engine)
         {
             r_EngineVolume = i_EngineVolume;
             r_LicenseType = i_LicenseType;

@@ -47,17 +47,30 @@ namespace Ex03.GarageLogic
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-        public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
+        public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
+            eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
         {
-            Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
-
+            object truckEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel); ;
+            Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, truckEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-        public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
+        public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber, 
+            string i_ModelName, string i_Owner, string i_PhoneNumber, float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0, 
+            eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
         {
-            Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
+            object motorcycleEngine = null;
 
+            if (i_EngineType is eEngineType.Electric)
+            {
+                motorcycleEngine = new ElectricEngine(i_MaxBatteryLife, i_CurrentBatteryLife);
+            }
+            else if (i_EngineType is eEngineType.Fuel)
+            {
+                motorcycleEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
+            }
+
+            Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, motorcycleEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
@@ -96,12 +109,12 @@ namespace Ex03.GarageLogic
 
         public void Refuel(string i_LicenseNumber, eFuelType i_FuelType, float i_LitersToAdd)
         {
-
+            //to do
         }
 
         public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
         {
-
+            //to do
         }
 
         public string DisplayVehicle(string i_LicenseNumber)

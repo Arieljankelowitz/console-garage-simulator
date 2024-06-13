@@ -182,15 +182,17 @@ namespace Ex_03
             if(i_VehicleType.Contains("Car"))
             {
                 (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
+                Console.Clear();
 
                 if(i_VehicleType.Contains("Electric"))
                 {
                     (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                    /*m_Garage.CreateNewVehicle();*/
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber
+                        , maxBatteryLife, currentBatteryLife);
                 } 
                 else
                 {
-                    ConnsoleUtil.NewFuel();
+                    /*ConnsoleUtil.NewFuel();*/
                     m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
@@ -207,7 +209,7 @@ namespace Ex_03
                 }
                 else
                 {
-                    ConnsoleUtil.NewFuel();
+                    /*ConnsoleUtil.NewFuel();*/
                     /*m_Garage.CreateNewVehicle();*/
                 }
             }
@@ -221,7 +223,7 @@ namespace Ex_03
                 }
                 else
                 {
-                    ConnsoleUtil.NewFuel();
+                    /*ConnsoleUtil.NewFuel();*/
                     /*m_Garage.CreateNewVehicle();*/
                 }
             }

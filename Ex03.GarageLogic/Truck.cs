@@ -11,9 +11,9 @@ namespace Ex03.GarageLogic
         private bool m_ContainsToxins;
         private readonly float r_CargoTankVolume;
         public Truck(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber,
-                                        string i_ModelName, string i_Owner, string i_PhoneNumber)
+                                        string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
             : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, 
-                   Utils.InitializeWheels(new Wheel("China", 28, 28), 12))
+                   Utils.InitializeWheels(new Wheel("China", 28, 28), 12), i_Engine)
         {
             m_ContainsToxins = i_ContainsToxins;
             r_CargoTankVolume = i_CargoTankVolume;
