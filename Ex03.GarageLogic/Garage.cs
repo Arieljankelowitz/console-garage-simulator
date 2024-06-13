@@ -8,19 +8,19 @@ namespace Ex03.GarageLogic
 {
     public class Garage
     {
-        public readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
+        private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
 
         public Garage() 
         { 
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
 
-        public void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
+        internal void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
         {
             r_VehiclesInGarage.Add(i_LicenseNumber, i_Vehicle);
         } 
 
-        public bool IsVehicleInGarage(string i_LicenseNumber)
+       internal bool IsVehicleInGarage(string i_LicenseNumber)
         {
             bool isVehicleInGarage = r_VehiclesInGarage.ContainsKey(i_LicenseNumber);
 
@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
 
         }
 
-        public Vehicle GetVehicle(string i_LicenseNumber)
+        internal Vehicle GetVehicle(string i_LicenseNumber)
         {
             Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
 
