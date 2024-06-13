@@ -9,9 +9,9 @@ namespace Ex_03
 {
     internal class ConnsoleUtil
     {
-        public static string ChooseOption(string i_message, string[] i_Options, int i_OptionsPerLine = 4, int i_SpacingPerLine = 8, int i_StartX = 0)
+        public static string ChooseOption(string i_message, string[] i_Options, int i_OptionsPerLine = 4, int i_StartX = 0)
         {
-            
+            int i_SpacingPerLine = i_Options.Max(option => option.Length) + 2;
             int startY = Console.CursorTop + 2;
 
             int currentSelectedOption = 0;
@@ -76,6 +76,7 @@ namespace Ex_03
             string colorMessage = "What color is your car? ";
             eColor carColor = ParseEnum<eColor>(ChooseOption(colorMessage, colorOptions));
 
+
             string[] doorOptions = { "2", "3", "4", "5" };
             string doorMessage = "How many doors does your car have? ";
             int numberOfDoors = int.Parse(ChooseOption(doorMessage, doorOptions));
@@ -90,6 +91,11 @@ namespace Ex_03
         public static T ParseEnum<T>(string value)
         {
             return (T)Enum.Parse(typeof(T), value, true);
+        }
+
+        public static void BlankSpace()
+        {
+            Console.WriteLine();
         }
     }
 }

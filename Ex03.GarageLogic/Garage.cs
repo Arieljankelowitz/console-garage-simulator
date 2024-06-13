@@ -29,14 +29,14 @@ namespace Ex03.GarageLogic
             return isVehicleInGarage;
         }
 
-        public void CreateNewVehicle()
+        public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
         {
-            Vehicle newVehicle = null;
+            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
 
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-        public Vehicle GetVehicle(string i_LicenseNumber)
+        private Vehicle GetVehicle(string i_LicenseNumber)
         {
             Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
 
@@ -77,6 +77,13 @@ namespace Ex03.GarageLogic
         public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
         {
 
+        }
+
+        public string DisplayVehicle(string i_LicenseNumber)
+        {
+            Vehicle vehicle = GetVehicle(i_LicenseNumber);
+
+            return vehicle.ToString(); 
         }
     }
 }

@@ -2,23 +2,63 @@
 
 using Ex_03;
 using Ex03.GarageLogic;
+using System;
 using System.Runtime.InteropServices;
 
 
 namespace GarageLogic
 
 {
-    internal class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
-            string[] boardOptions = new string[] { "4x4", "4x5", "4x6", "5x4", "5x6", "6x4", "6x5", "6x6" };
+            run();
+        }
 
-            string[] nameOptions = new string[] { "Rephaela Jankelowitz", "Rafaela Janks", "Esta Janks ", "RJ","this is goitn to be so lon i just want to see how it is goin to work in the prgram" };
-            string s =ConnsoleUtil.ChooseOption("Choose a baby Name", nameOptions, 1, 0, 1);
-            ConnsoleUtil.ChooseOption("choose board", boardOptions);
-            
-            System.Console.WriteLine(s);
+        public static void run()
+        {
+            FrontOffice frontOffice = new FrontOffice();
+
+            frontOffice.Welcome();
+            while (frontOffice.BeingServiced) 
+            {
+               string chosenService = frontOffice.ChooseService();
+               Console.Clear();
+
+                switch (chosenService)
+                {
+                    case "1. Insert a new vehicle":
+                        frontOffice.InsertVehicle();
+                        break;
+                    case "2. Display vehicles":
+                        frontOffice.DisplayVehicles();
+                        break;
+                    case "3. Change vehicle status":
+                        frontOffice.ChangeStatus();
+                        break;
+                    case "4. Inflate vehicle tires":
+                        frontOffice.FillTires();
+                        break;
+                    case "5. Refuel vehicle":
+                        frontOffice.Refuel();
+                        break;
+                    case "6. Recharge vehicle":
+                        frontOffice.Recharge();
+                        break;
+                    case "7. Display vehicle info":
+                        frontOffice.DisplayVehicleInfo();
+                        break;
+                    case "8. Leave Garage":
+                        frontOffice.BeingServiced = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Service");
+                        break;
+                }
+            }
+
+            frontOffice.Goodbye();
         }
     }
 }
