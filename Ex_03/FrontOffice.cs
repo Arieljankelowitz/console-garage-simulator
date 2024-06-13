@@ -82,10 +82,35 @@ namespace Ex_03
         internal void ChangeStatus()
         {
             Console.WriteLine("Please enter the license number of the vehicle you'd like to update: ");
-            string vehicleLicesne = Console.ReadLine();
+            string vehicleLicense = Console.ReadLine();
 
+            string statusMessage = "select the new status";
+            string[] statusOptions = { "In Repair", "Repaired", "Payed For" };
+            string updatedStatusString = ConnsoleUtil.ChooseOption(statusMessage, statusOptions).Replace(" ", "");
+            eVehicleStatus updatedStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(updatedStatusString);
 
+            m_Garage.ChangeStatus(updatedStatus, vehicleLicense);
+            Console.WriteLine("Status Updated.");
         }
+
+        internal void FillTires()
+        {
+            Console.WriteLine("Please enter the license number of the vehicle you'd like to update: ");
+            string vehicleLicense = Console.ReadLine();
+
+            try
+            {
+                m_Garage.PumpTires(vehicleLicense);
+                Console.WriteLine("Succesfully filled tires");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Invalid License Number, unable to fill up tires.");
+            }
+        }
+
+
+        internal void 
 
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
