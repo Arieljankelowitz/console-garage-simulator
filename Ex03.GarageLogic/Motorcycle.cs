@@ -25,5 +25,16 @@ namespace Ex03.GarageLogic
         {
 
         }
+
+        public override string ToString()
+        {
+            string output = string.Format(@"
+    Motorcycle Specs
+        License Type: {0},
+        Engine Volume: {1}cc
+", r_LicenseType, r_EngineVolume);
+
+            return output;
+        }
     }
 }

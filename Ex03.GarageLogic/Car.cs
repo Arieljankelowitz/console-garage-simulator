@@ -20,5 +20,16 @@ namespace Ex03.GarageLogic
         {
 
         }
+
+        public override string ToString()
+        {
+            string output = string.Format(@"
+    Car Specs
+        Color: {0},
+        Number of Doors: {1}
+", m_CarColor, r_NumberOfDoors); 
+
+            return output;
+        }
     }
 }
