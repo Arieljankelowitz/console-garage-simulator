@@ -36,6 +36,20 @@ namespace Ex03.GarageLogic
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
+        public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
+        {
+            Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
+
+            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
+        }
+
+        public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
+        {
+            Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
+
+            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
+        }
+
         private Vehicle GetVehicle(string i_LicenseNumber)
         {
             Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
