@@ -76,7 +76,7 @@ namespace Ex_03
                 try
                 {
                     electricProperties.maxBatteryLife = convertTimeToHours(maxTime);
-                    validInput = true; // Exit the loop if input is valid
+                    validInput = true; 
                 }
                 catch (FormatException ex)
                 {
@@ -133,7 +133,12 @@ namespace Ex_03
         }
             
         
-        internal static void NewFuel() { }
+        /*internal static (string fuelType, float maxFuel, float currentFuel) NewFuel() 
+        {
+           *//* (string fuelType, float maxFuel, float currentFuel) enginedData = ("", 0, 0);
+            
+            enginedData.fuelType = ChooseOption(m)*/
+       // }
 
         internal static (eColor color, int numOfDoors) NewCar() 
         {
