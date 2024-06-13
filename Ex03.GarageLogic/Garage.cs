@@ -29,10 +29,21 @@ namespace Ex03.GarageLogic
             return isVehicleInGarage;
         }
 
-        public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber)
+        public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, 
+            float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0, eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
         {
-            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber);
+            object carEngine = null;
 
+            if (i_EngineType is eEngineType.Electric)
+            {
+                carEngine = new ElectricEngine(i_MaxBatteryLife, i_CurrentBatteryLife);
+            }
+            else if(i_EngineType is eEngineType.Fuel)
+            {
+                carEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
+            }
+
+            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, carEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 

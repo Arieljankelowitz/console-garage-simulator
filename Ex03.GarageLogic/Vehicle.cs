@@ -12,6 +12,7 @@ namespace Ex03.GarageLogic
 
         private float m_RemainingEnergy;
         private readonly List<Wheel> r_Wheels;
+        private readonly object r_Engine;
         private readonly eEngineType r_EngineType;
         private eVehicleStatus m_VehicleStaus;
 
@@ -24,7 +25,8 @@ namespace Ex03.GarageLogic
         public eVehicleStatus VehicleStatus { get { return m_VehicleStaus; } set { m_VehicleStaus = value; } }
         public eEngineType EngineType { get { return r_EngineType; } }
 
-        public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, List<Wheel> i_Wheels)
+        public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, 
+            List<Wheel> i_Wheels, object i_Engine)
         {
             r_ModelName = i_ModelName;
             r_LicenseNumber = i_LicenseNumber;
@@ -34,7 +36,7 @@ namespace Ex03.GarageLogic
             m_VehicleStaus = eVehicleStatus.InRepair;
             m_RemainingEnergy = 100;
             r_Wheels = i_Wheels;
-
+            r_Engine = i_Engine;
         }
 
         internal void PumpTires()

@@ -8,6 +8,7 @@ namespace Ex03.GarageLogic
 {
     public abstract class Engine
     {
+        internal Engine() { }
         public abstract void FillUp();
     }
 
