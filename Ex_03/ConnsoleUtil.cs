@@ -194,6 +194,31 @@ namespace Ex_03
             return (carColor, numberOfDoors);            
         }
 
+        static void AddWheelsToVehicle()
+        {
+            try
+            {
+                Console.WriteLine("Vehicle not found in the garage.");
+
+                string[] options = { "Uniformly (all wheels the same)", "Individually (specify details for each wheel)" };
+                string choice = ConnsoleUtil.ChooseOption("Do you want to add wheels uniformly or individually?", options);
+
+                if (choice == "Uniformly (all wheels the same)")
+                {
+                   // AddWheelsUniformly();
+                }
+                else
+                {
+                    //AddWheelsIndividually();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
         internal static void NewMotorcycle() { }
 
         internal static void NewTruck() { }

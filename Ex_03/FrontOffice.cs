@@ -194,7 +194,8 @@ namespace Ex_03
                 {
                     //fix the type matche
                    (string typeOfFuel, float maxFuel, float currentFuel ) = ConnsoleUtil.NewFuel();
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, 0 ,0, eFuelType.Octane96, currentFuel, maxFuel);
+                     eFuelType fuelType  =  ConnsoleUtil.ParseEnum<eFuelType>((string)typeOfFuel);
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, 0 ,0, fuelType, currentFuel, maxFuel);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
                     ConnsoleUtil.BlankSpace();
@@ -229,5 +230,6 @@ namespace Ex_03
                 }
             }
         }
+        
     }
 }
