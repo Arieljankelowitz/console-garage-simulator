@@ -194,30 +194,89 @@ namespace Ex_03
             return (carColor, numberOfDoors);            
         }
 
-        static void AddWheelsToVehicle()
+       
+
+        internal static (string manufacturerName, float currentAirPressure, float maxAirPressure, int numberOfWheels) CollectUniformWheelData()
         {
-            try
+            while (true)
             {
-                Console.WriteLine("Vehicle not found in the garage.");
-
-                string[] options = { "Uniformly (all wheels the same)", "Individually (specify details for each wheel)" };
-                string choice = ConnsoleUtil.ChooseOption("Do you want to add wheels uniformly or individually?", options);
-
-                if (choice == "Uniformly (all wheels the same)")
+                try
                 {
-                   // AddWheelsUniformly();
-                }
-                else
-                {
-                    //AddWheelsIndividually();
-                }
+                    Console.Write("Enter manufacturer name for the wheels: ");
+                    string manufacturerName = Console.ReadLine();
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
+                    Console.Write("Enter current air pressure for the wheels: ");
+                    if (!float.TryParse(Console.ReadLine(), out float currentAirPressure))
+                    {
+                        throw new ArgumentException("Invalid input for air pressure. Please enter a valid number.");
+                    }
+
+                    Console.Write("Enter max air pressure for the wheels: ");
+                    if (!float.TryParse(Console.ReadLine(), out float maxAirPressure))
+                    {
+                        throw new ArgumentException("Invalid input for max air pressure. Please enter a valid number.");
+                    }
+
+                    Console.Write("Enter the number of wheels to add: ");
+                    if (!int.TryParse(Console.ReadLine(), out int numberOfWheels))
+                    {
+                        throw new ArgumentException("Invalid input for number of wheels. Please enter a valid number.");
+                    }
+
+                    return (manufacturerName, currentAirPressure, maxAirPressure, numberOfWheels);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}. Please try again.");
+                }
             }
         }
+
+       internal static List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> CollectIndividualWheelData()
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.Write("Enter the number of wheels to add: ");
+                    if (!int.TryParse(Console.ReadLine(), out int numberOfWheels))
+                    {
+                        throw new ArgumentException("Invalid input for number of wheels. Please enter a valid number.");
+                    }
+
+                    var wheelDataList = new List<(string, float, float)>();
+
+                    for (int i = 0; i < numberOfWheels; i++)
+                    {
+                        Console.WriteLine($"Enter details for wheel {i + 1}:");
+
+                        Console.Write("Manufacturer name: ");
+                        string manufacturerName = Console.ReadLine();
+
+                        Console.Write("Current air pressure: ");
+                        if (!float.TryParse(Console.ReadLine(), out float currentAirPressure))
+                        {
+                            throw new ArgumentException("Invalid input for air pressure. Please enter a valid number.");
+                        }
+
+                        Console.Write("Max air pressure: ");
+                        if (!float.TryParse(Console.ReadLine(), out float maxAirPressure))
+                        {
+                            throw new ArgumentException("Invalid input for max air pressure. Please enter a valid number.");
+                        }
+
+                        wheelDataList.Add((manufacturerName, currentAirPressure, maxAirPressure));
+                    }
+
+                    return wheelDataList;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}. Please try again.");
+                }
+            }
+        }
+
 
         internal static void NewMotorcycle() { }
 

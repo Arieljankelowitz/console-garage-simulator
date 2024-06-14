@@ -29,8 +29,10 @@ namespace Ex03.GarageLogic
             return isVehicleInGarage;
         }
 
-        public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, 
-            float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0, eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
+        public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber,
+                             string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList,
+                             float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0,
+                             eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
         {
             object carEngine = null;
 
@@ -44,7 +46,8 @@ namespace Ex03.GarageLogic
                 carEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
             }
 
-            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, carEngine);
+            List<Wheel> wheels = CreateListOfWheels(wheelDataList);
+            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, wheels, carEngine) ;
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
@@ -149,6 +152,19 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public List<Wheel> CreateListOfWheels(List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList)
+        {
+            List<Wheel> wheels = new List<Wheel>();
+
+            foreach (var (manufacturerName, currentAirPressure, maxAirPressure) in wheelDataList)
+            {
+                Wheel wheel = new Wheel(manufacturerName, currentAirPressure, maxAirPressure);
+                wheels.Add(wheel);
+            }
+
+            return wheels;
+        }
+
         public string DisplayVehicle(string i_LicenseNumber)
         {
             if (r_VehiclesInGarage.TryGetValue(i_LicenseNumber, out Vehicle vehicle))
@@ -160,5 +176,8 @@ namespace Ex03.GarageLogic
                 return "Vehicle not found.";
             }
         }
+
+
+        
     }
 }

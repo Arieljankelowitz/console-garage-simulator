@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
 
 
         }
-        public Wheel(string i_ManufacturName, float i_MaxAirPressure, float i_CurrentAirPressure)
+        public Wheel(string i_ManufacturName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
 
             r_ManufacturName = i_ManufacturName;

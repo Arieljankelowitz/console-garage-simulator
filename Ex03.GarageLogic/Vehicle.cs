@@ -27,8 +27,8 @@ namespace Ex03.GarageLogic
         public eEngineType EngineType { get { return r_EngineType; } }
         public object Engine { get { return r_Engine; } }
 
-        public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber, 
-            List<Wheel> i_Wheels, object i_Engine)
+        public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
+               List<Wheel> i_Wheels, object i_Engine)
         {
             r_ModelName = i_ModelName;
             r_LicenseNumber = i_LicenseNumber;
@@ -47,6 +47,11 @@ namespace Ex03.GarageLogic
             {
                 wheel.PumpTire();
             }
+        }
+        internal void AddWheel(string manufacturerName, float currentAirPressure, float maxAirPressure)
+        {
+            Wheel newWheel = new Wheel(manufacturerName, currentAirPressure, maxAirPressure);
+            r_Wheels.Add(newWheel);
         }
 
         internal abstract void FillUp();

@@ -166,6 +166,44 @@ namespace Ex_03
             Console.WriteLine("Thank you for coming to the Garage, have a good day! (press any key to quit)");
             Console.ReadLine();
         }
+        internal List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> AddWheelsToVehicle(string i_LicenseNumber)
+        {
+            List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = new List<(string, float, float)>();
+
+            try
+            {
+                string[] options = { "Uniformly (all wheels the same)", "Individually (specify details for each wheel)" };
+                string choice = ConnsoleUtil.ChooseOption("Do you want to add wheels uniformly or individually?", options);
+
+                if (choice == "Uniformly (all wheels the same)")
+                {
+                    (string manufacturerName, float currentAirPressure, float maxAirPressure, int numberOfWheels) = ConnsoleUtil.CollectUniformWheelData();
+
+                    for (int i = 0; i < numberOfWheels; i++)
+                    {
+                        wheelDataList.Add((manufacturerName, currentAirPressure, maxAirPressure));
+                    }
+                }
+                else
+                {
+                    wheelDataList = ConnsoleUtil.CollectIndividualWheelData();
+                }
+
+                Console.WriteLine("Wheel data collected successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error collecting wheel data: {ex.Message}");
+            }
+
+            return wheelDataList;
+        }
+
+
+
+
+
+
 
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
@@ -178,24 +216,27 @@ namespace Ex_03
 
             Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
             string vehicleModel = Console.ReadLine();
+            // for david to connect the back end and the front end
+            List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = AddWheelsToVehicle(i_LicenseNumber);
 
             if(i_VehicleType.Contains("Car"))
             {
                 (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
                 Console.Clear();
 
+
                 if(i_VehicleType.Contains("Electric"))
                 {
                     (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber
-                        , maxBatteryLife, currentBatteryLife);
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                      wheelDataList, maxBatteryLife, currentBatteryLife);
                 } 
                 else
                 {
-                    //fix the type matche
+                    
                    (string typeOfFuel, float maxFuel, float currentFuel ) = ConnsoleUtil.NewFuel();
                      eFuelType fuelType  =  ConnsoleUtil.ParseEnum<eFuelType>((string)typeOfFuel);
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, 0 ,0, fuelType, currentFuel, maxFuel);
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, wheelDataList, 0 , 0,  fuelType, maxFuel , currentFuel);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
                     ConnsoleUtil.BlankSpace();

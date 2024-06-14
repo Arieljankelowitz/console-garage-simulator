@@ -8,9 +8,8 @@ namespace Ex03.GarageLogic
         private eColor m_CarColor;
 
         public Car(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber,
-                                        string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
-            : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, 
-                  Utils.InitializeWheels(new Wheel("China", 33, 33), 4), i_Engine)
+                      string i_ModelName, string i_Owner, string i_PhoneNumber, List<Wheel> i_Wheels, object i_Engine)
+                      : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_Wheels, i_Engine)
         {
             m_CarColor = i_Color;
             r_NumberOfDoors = i_NumOfDoors;
