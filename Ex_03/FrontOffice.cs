@@ -301,12 +301,12 @@ namespace Ex_03
                 }
 
             }
-            /*else if (i_VehicleType.Contains("Truck"))
+            else if (i_VehicleType.Contains("Truck"))
             {
                 ConnsoleUtil.NewTruck();
                 if (i_VehicleType.Contains("Electric"))
                 {
-                    //(float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
+                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
                     //m_Garage.CreateNewVehicle();
                 }
                 else
@@ -314,7 +314,7 @@ namespace Ex_03
 
                     //m_Garage.CreateNewVehicle();
                 }
-            }*/
+            }
         }
 
 
