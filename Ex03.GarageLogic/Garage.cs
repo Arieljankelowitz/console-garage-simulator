@@ -8,6 +8,8 @@ namespace Ex03.GarageLogic
 {
     public class Garage
     {
+        private const float k_MaxElectricCarBattery = 3.5F;
+        private const int k_MaxFuelCar = 45;
         private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
 
         public List<string> VehiclesInGarage { get { return new List<string>(r_VehiclesInGarage.Keys); } } 
@@ -38,11 +40,12 @@ namespace Ex03.GarageLogic
 
             if (i_EngineType is eEngineType.Electric)
             {
+                i_MaxBatteryLife = k_MaxElectricCarBattery;
                 carEngine = new ElectricEngine(i_MaxBatteryLife, i_CurrentBatteryLife);
             }
             else if(i_EngineType is eEngineType.Fuel)
             {
-               
+                i_MaxFuel = k_MaxFuelCar;
                 carEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
             }
 

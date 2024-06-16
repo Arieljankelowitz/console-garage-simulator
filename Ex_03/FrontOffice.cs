@@ -216,7 +216,7 @@ namespace Ex_03
 
             Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
             string vehicleModel = Console.ReadLine();
-            // for david to connect the back end and the front end
+
             List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = AddWheelsToVehicle(i_LicenseNumber);
 
             if(i_VehicleType.Contains("Car"))
@@ -236,7 +236,7 @@ namespace Ex_03
                     
                    (string typeOfFuel, float maxFuel, float currentFuel ) = ConnsoleUtil.NewFuel();
                      eFuelType fuelType  =  ConnsoleUtil.ParseEnum<eFuelType>((string)typeOfFuel);
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, wheelDataList, 0 , 0,  fuelType, maxFuel , currentFuel);
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, wheelDataList, 0 , 0, fuelType, maxFuel , currentFuel);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
                     ConnsoleUtil.BlankSpace();
