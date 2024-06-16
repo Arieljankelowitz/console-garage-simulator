@@ -250,12 +250,12 @@ namespace Ex_03
                 if (i_VehicleType.Contains("Electric"))
                 {
                     float currentBatteryLife = ConnsoleUtil.NewElectric();
-                    m_Garage.CreateNewVehicle();
+                   //m_Garage.CreateNewVehicle();
                 }
                 else
                 {
                     ConnsoleUtil.NewFuel();
-                    m_Garage.CreateNewVehicle();
+                    //m_Garage.CreateNewVehicle();
                 }
             }
             else if (i_VehicleType.Contains("Truck"))

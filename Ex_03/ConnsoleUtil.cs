@@ -177,7 +177,23 @@ namespace Ex_03
             return (licenseType, engineVolume);
         }
 
-        internal static void NewTruck() { }
+        internal static (string containsDangerousMaterials, float cargoTankVolume) NewTruck()
+        {
+            
+            string[] dangerousMaterialsOptions = { "yes", "no" };
+            string dangerousMaterialsMessage = "Does the truck contain dangerous materials? ";
+            string containsDangerousMaterials = ChooseOption(dangerousMaterialsMessage, dangerousMaterialsOptions, 2);
+
+            string cargoTankVolumeMessage = "What is the cargo tank volume of your truck? ";
+            Console.WriteLine(cargoTankVolumeMessage);
+            float cargoTankVolume;
+            while (!float.TryParse(Console.ReadLine(), out cargoTankVolume) || cargoTankVolume <= 0)
+            {
+                Console.WriteLine("Please enter a valid positive float value for the cargo tank volume.");
+            }
+
+            return (containsDangerousMaterials, cargoTankVolume);
+        }
 
 
 
