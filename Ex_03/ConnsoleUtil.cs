@@ -63,28 +63,11 @@ namespace Ex_03
             return i_Options[currentSelectedOption];
         }
 
-        internal static (float maxBatteryLife, float currentBatteryLife) NewElectric()
+        internal static float NewElectric()
         {
-            (float maxBatteryLife, float currentBatteryLife) electricProperties = (0.0f, 0.0f);
 
+            float currentBatteryLife = 0f;
             bool validInput = false;
-            while (!validInput)
-            {
-                Console.WriteLine("Please enter the Max battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
-                string maxTime = Console.ReadLine();
-
-                try
-                {
-                    electricProperties.maxBatteryLife = convertTimeToHours(maxTime);
-                    validInput = true; 
-                }
-                catch (FormatException ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-            }
-
-            validInput = false; 
             while (!validInput)
             {
                 Console.WriteLine("Please enter the current battery life in hours (Separated by a ':' Eg 2 hours and 24 min is 2:24): ");
@@ -92,7 +75,7 @@ namespace Ex_03
 
                 try
                 {
-                    electricProperties.currentBatteryLife = convertTimeToHours(currentTime);
+                    currentBatteryLife = convertTimeToHours(currentTime);
                     validInput = true; 
                 }
                 catch (FormatException ex)
@@ -101,7 +84,7 @@ namespace Ex_03
                 }
             }
 
-            return electricProperties;
+            return currentBatteryLife;
         }
 
 
@@ -133,40 +116,19 @@ namespace Ex_03
         }
 
 
-        internal static (string fuelType, float maxFuel, float currentFuel) NewFuel()
+        internal static float CurrentFuelAmount()
         {
-            (string fuelType, float currentFuel, float maxFuel) engineData = ("", 0, 0);
-            string message = "Select the correct type of fuel for your car";
-            string[] fuelTypes = { "Soler", "Octane95", "Octane96", "Octane98" };
 
-            engineData.fuelType = ChooseOption(message, fuelTypes);
-
+            float currentFuel = 0f;
             bool validInput = false;
-            while (!validInput)
-            {
-                Console.WriteLine("Please enter the Max fuel capacity in liters: ");
-                string maxFuelInput = Console.ReadLine();
-
-                if (float.TryParse(maxFuelInput, out float out_maxFuel))
-                {
-                    engineData.maxFuel = out_maxFuel;
-                    validInput = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                }
-            }
-
-            validInput = false;
             while (!validInput)
             {
                 Console.WriteLine("Please enter the Current fuel amount in liters: ");
                 string currentFuelInput = Console.ReadLine();
 
-                if (float.TryParse(currentFuelInput, out float currentFuel))
+                if (float.TryParse(currentFuelInput, out float currentFuelParsed))
                 {
-                    engineData.currentFuel = currentFuel;
+                    currentFuel = currentFuelParsed;
                     validInput = true;
                 }
                 else
@@ -175,7 +137,7 @@ namespace Ex_03
                 }
             }
 
-            return engineData;
+            return currentFuel;
         }
 
 
