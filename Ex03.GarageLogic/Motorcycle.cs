@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
             r_LicenseType = i_LicenseType;
         }
 
-        internal override void FillUp()
+        internal override void FillUp(float i_AmountToFill)
         {
 
         }

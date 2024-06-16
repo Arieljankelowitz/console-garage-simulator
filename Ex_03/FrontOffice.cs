@@ -122,15 +122,16 @@ namespace Ex_03
             string chosenFuelString = ConnsoleUtil.ChooseOption(fuelMessage, fuelOptions).Replace(" ", "");
             eFuelType chosenFuel = ConnsoleUtil.ParseEnum<eFuelType>(chosenFuelString);
             Console.WriteLine("How many ltrs to add?");
-            float litersToAdd = float.Parse(Console.ReadLine()); 
+            
             
             try
             {
+                float litersToAdd = float.Parse(Console.ReadLine());
                 m_Garage.Refuel(vehicleLicense, chosenFuel, litersToAdd);
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Invalid.");
+                Console.WriteLine(ex.Message);
             }
         }
 

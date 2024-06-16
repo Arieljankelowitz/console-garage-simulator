@@ -28,6 +28,8 @@ namespace Ex03.GarageLogic
         public eEngineType EngineType { get { return r_EngineType; } }
         public object Engine { get { return r_Engine; } }
 
+        public eFuelType FuelType { get { return (r_Engine as FuelEngine).FuelType; } }
+
         public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
                List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, int i_NumOfWheels, float i_MaxAirPressure, object i_Engine)
         {
@@ -98,7 +100,7 @@ namespace Ex03.GarageLogic
 
             m_RemainingEnergy = currentEnergy / maxEnergy;
         }
-        internal abstract void FillUp();
+        internal abstract void FillUp(float i_AmountToFill);
 
         public override string ToString()
         {

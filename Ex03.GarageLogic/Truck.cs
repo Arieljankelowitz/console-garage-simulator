@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             r_CargoTankVolume = i_CargoTankVolume;
         }
 
-        internal override void FillUp()
+        internal override void FillUp(float i_AmountToFill)
         {
 
         }

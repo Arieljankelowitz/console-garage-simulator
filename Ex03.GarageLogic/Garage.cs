@@ -122,45 +122,48 @@ namespace Ex03.GarageLogic
         }
 
         public void Refuel(string i_LicenseNumber, eFuelType i_FuelType, float i_LitersToAdd)
-        
+        {
+            if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
             {
-                if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
-                {
-                    throw new ArgumentException("Vehicle not found in the garage.");
-                }
+                throw new ArgumentException("Vehicle not found in the garage.");
+            }
 
-                Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
+            Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
 
+            if (!(vehicle.EngineType is eEngineType.Fuel))
+            {
+                throw new ArgumentException("This vehicle does not have an fuel engine.");
+            }
 
-                FuelEngine fuelEngine = (FuelEngine)vehicle.Engine;
+            if (i_FuelType != vehicle.FuelType)
+            {
+                throw new ArgumentException("Wrong fuel type");
+            }
 
-                fuelEngine.FillUp(i_LitersToAdd, i_FuelType);
+            vehicle.FillUp(i_LitersToAdd);
+
             
         }
 
         public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
         {
+            
+            if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
             {
-                if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
-                {
-                    throw new ArgumentException("Vehicle not found in the garage.");
-                }
-
-                Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
-
-                if (!(vehicle.Engine is ElectricEngine))
-                {
-                    throw new ArgumentException("This vehicle does not have an electric engine.");
-                }
-
-                ElectricEngine electricEngine = (ElectricEngine)vehicle.Engine;
-
-
-                float chargeToAdd = (float)i_MinutestoCharge / 60;
-
-                electricEngine.FillUp(chargeToAdd);
-                vehicle.calculateRemainingEnergy();
+                throw new ArgumentException("Vehicle not found in the garage.");
             }
+
+            Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
+
+            if (!(vehicle.EngineType is eEngineType.Electric))
+            {
+                throw new ArgumentException("This vehicle does not have an electric engine.");
+            }
+
+            float chargeToAdd = (float)i_MinutestoCharge / 60;
+
+            vehicle.FillUp(chargeToAdd);
+            
         }
 
         public List<Wheel> CreateListOfWheels(List<(string manufacturerName, float currentAirPressure)> wheelDataList)
