@@ -225,47 +225,51 @@ namespace Ex_03
 
                 if (i_VehicleType.Contains("Electric"))
                 {
-                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
+                    float currentBatteryLife = ConnsoleUtil.NewElectric();
                     m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                      wheelDataList, maxBatteryLife, currentBatteryLife);
+                      wheelDataList, currentBatteryLife);
+                    Console.Clear();
+                    Console.WriteLine("Vehicle Reigstered!");
+                    ConnsoleUtil.BlankSpace();
                 } 
                 else
                 {
                     
-                   (string typeOfFuel, float maxFuel, float currentFuel ) = ConnsoleUtil.NewFuel();
-                     eFuelType fuelType  =  ConnsoleUtil.ParseEnum<eFuelType>((string)typeOfFuel);
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, wheelDataList, 0 , 0, fuelType, maxFuel , currentFuel);
+                   float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+                    
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber, 
+                        wheelDataList, i_CurrentFuel: currentFuel);
                     Console.Clear();
                     Console.WriteLine("Vehicle Reigstered!");
                     ConnsoleUtil.BlankSpace();
                 }
             }
-            else if(i_VehicleType.Contains("Motorcycle"))
+            else if (i_VehicleType.Contains("Motorcycle"))
             {
                 (eLicenseType LicenseType, int EngineVolume) MotorCycleInfo = ConnsoleUtil.NewMotorcycle();
                 if (i_VehicleType.Contains("Electric"))
                 {
-                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                   m_Garage.CreateNewVehicle(i_LicenseNumber);
+                    float currentBatteryLife = ConnsoleUtil.NewElectric();
+                    m_Garage.CreateNewVehicle();
                 }
                 else
                 {
-                    /*ConnsoleUtil.NewFuel();*/
-                    /*m_Garage.CreateNewVehicle();*/
+                    ConnsoleUtil.NewFuel();
+                    m_Garage.CreateNewVehicle();
                 }
             }
-            else if(i_VehicleType.Contains("Truck"))
+            else if (i_VehicleType.Contains("Truck"))
             {
                 ConnsoleUtil.NewTruck();
                 if (i_VehicleType.Contains("Electric"))
                 {
                     (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                   /* m_Garage.CreateNewVehicle();*/
+                    m_Garage.CreateNewVehicle();
                 }
                 else
                 {
-                    /*ConnsoleUtil.NewFuel();*/
-                    /*m_Garage.CreateNewVehicle();*/
+                    ConnsoleUtil.NewFuel();
+                    m_Garage.CreateNewVehicle();
                 }
             }
         }
