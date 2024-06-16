@@ -167,9 +167,9 @@ namespace Ex_03
             Console.ReadLine();
         }
 
-        private List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> AddWheelsToVehicle(string i_LicenseNumber)
+        private List<(string manufacturerName, float currentAirPressure)> collectWheelData(int i_NumOfWheelsToAdd)
         {
-            List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = new List<(string, float, float)>();
+            List<(string manufacturerName, float currentAirPressure)> wheelDataList = new List<(string, float)>();
 
             try
             {
@@ -180,14 +180,14 @@ namespace Ex_03
                 {
                     (string manufacturerName, float currentAirPressure) = ConnsoleUtil.CollectUniformWheelData();
 
-                    for (int i = 0; i < numberOfWheels; i++)
+                    for (int i = 0; i < i_NumOfWheelsToAdd; i++)
                     {
-                        wheelDataList.Add((manufacturerName, currentAirPressure, maxAirPressure));
+                        wheelDataList.Add((manufacturerName, currentAirPressure));
                     }
                 }
                 else
                 {
-                    wheelDataList = ConnsoleUtil.CollectIndividualWheelData();
+                    wheelDataList = ConnsoleUtil.CollectIndividualWheelData(i_NumOfWheelsToAdd);
                 }
 
                 Console.WriteLine("Wheel data collected successfully.");
@@ -203,6 +203,7 @@ namespace Ex_03
 
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
+            int numOfWheelsToAdd;
             Console.WriteLine("Thank you for choosing our Garage, lets start registering");
             Console.WriteLine("Please enter your name: ");
             string ownerName = Console.ReadLine();
@@ -212,18 +213,17 @@ namespace Ex_03
 
             Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
             string vehicleModel = Console.ReadLine();
-            // for david to connect the back end and the front end
             Console.Clear();
-            List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = AddWheelsToVehicle(i_LicenseNumber);
-            Console.Clear();
-
+            
             if(i_VehicleType.Contains("Car"))
             {
+                numOfWheelsToAdd = 4;
                 (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
                 Console.Clear();
+                List<(string manufacturerName, float currentAirPressure)> wheelDataList = collectWheelData(numOfWheelsToAdd);
+                Console.Clear();
 
-
-                if(i_VehicleType.Contains("Electric"))
+                if (i_VehicleType.Contains("Electric"))
                 {
                     (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
                     m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,

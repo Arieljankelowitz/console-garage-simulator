@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +11,8 @@ namespace Ex03.GarageLogic
         private readonly int r_EngineVolume;
         private Object r_Engine;
         private readonly eLicenseType r_LicenseType;
+        private const int k_NumOfWheels = 2;
+        private const int k_MaxAirPressure = 33;
 
         public Motorcycle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
                                         string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
@@ -39,3 +41,4 @@ namespace Ex03.GarageLogic
         }
     }
 }
+*/

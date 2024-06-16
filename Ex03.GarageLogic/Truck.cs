@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,9 @@ namespace Ex03.GarageLogic
     {
         private bool m_ContainsToxins;
         private readonly float r_CargoTankVolume;
+        private const int k_NumOfWheels = 12;
+        private const int k_MaxAirPressure = 28;
+
         public Truck(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber,
                                         string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
             : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, 
@@ -41,3 +44,4 @@ namespace Ex03.GarageLogic
 
     
 }
+*/

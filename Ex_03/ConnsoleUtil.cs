@@ -211,18 +211,6 @@ namespace Ex_03
                         throw new ArgumentException("Invalid input for air pressure. Please enter a valid number.");
                     }
 
-/*                    Console.Write("Enter max air pressure for the wheels: ");
-                    if (!float.TryParse(Console.ReadLine(), out float maxAirPressure))
-                    {
-                        throw new ArgumentException("Invalid input for max air pressure. Please enter a valid number.");
-                    }*/
-
-/*                    Console.Write("Enter the number of wheels to add: ");
-                    if (!int.TryParse(Console.ReadLine(), out int numberOfWheels))
-                    {
-                        throw new ArgumentException("Invalid input for number of wheels. Please enter a valid number.");
-                    }*/
-
                     return (manufacturerName, currentAirPressure);
                 }
                 catch (Exception ex)
@@ -232,21 +220,16 @@ namespace Ex_03
             }
         }
 
-       internal static List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> CollectIndividualWheelData()
+       internal static List<(string manufacturerName, float currentAirPressure)> CollectIndividualWheelData(int i_NumOfWheelsToAdd)
         {
             while (true)
             {
                 try
                 {
-                    Console.Write("Enter the number of wheels to add: ");
-                    if (!int.TryParse(Console.ReadLine(), out int numberOfWheels))
-                    {
-                        throw new ArgumentException("Invalid input for number of wheels. Please enter a valid number.");
-                    }
 
-                    var wheelDataList = new List<(string, float, float)>();
+                    var wheelDataList = new List<(string, float)>();
 
-                    for (int i = 0; i < numberOfWheels; i++)
+                    for (int i = 0; i < i_NumOfWheelsToAdd; i++)
                     {
                         Console.WriteLine($"Enter details for wheel {i + 1}:");
 
@@ -259,13 +242,7 @@ namespace Ex_03
                             throw new ArgumentException("Invalid input for air pressure. Please enter a valid number.");
                         }
 
-                        Console.Write("Max air pressure: ");
-                        if (!float.TryParse(Console.ReadLine(), out float maxAirPressure))
-                        {
-                            throw new ArgumentException("Invalid input for max air pressure. Please enter a valid number.");
-                        }
-
-                        wheelDataList.Add((manufacturerName, currentAirPressure, maxAirPressure));
+                        wheelDataList.Add((manufacturerName, currentAirPressure));
                     }
 
                     return wheelDataList;

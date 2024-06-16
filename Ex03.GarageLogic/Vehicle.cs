@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Ex03.GarageLogic
@@ -28,7 +29,7 @@ namespace Ex03.GarageLogic
         public object Engine { get { return r_Engine; } }
 
         public Vehicle(eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
-               List<Wheel> i_Wheels, object i_Engine)
+               List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, int i_NumOfWheels, float i_MaxAirPressure, object i_Engine)
         {
             r_ModelName = i_ModelName;
             r_LicenseNumber = i_LicenseNumber;
@@ -37,8 +38,9 @@ namespace Ex03.GarageLogic
             m_PhoneNumber = i_PhoneNumber;
             m_VehicleStaus = eVehicleStatus.InRepair;
             m_RemainingEnergy = 100;
-            r_Wheels = i_Wheels;
             r_Engine = i_Engine;
+            r_Wheels = new List<Wheel>(i_NumOfWheels);
+            AddWheels(i_WheelDataList, i_MaxAirPressure, i_NumOfWheels);
         }
 
         internal void PumpTires()
@@ -48,11 +50,35 @@ namespace Ex03.GarageLogic
                 wheel.PumpTire();
             }
         }
-        internal void AddWheel(string manufacturerName, float currentAirPressure, float maxAirPressure)
+        internal void AddWheels(List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, float i_MaxAirPressure, int i_NumOfWheelsToAdd)
         {
-            Wheel newWheel = new Wheel(manufacturerName, currentAirPressure, maxAirPressure);
-            r_Wheels.Add(newWheel);
+            if (i_WheelDataList == null)
+            {
+                throw new ArgumentException("The wheel data list does not contain enough elements.");
+            }
+
+            for (int i = 0; i < i_NumOfWheelsToAdd; i++)
+            {
+                var wheelData = i_WheelDataList.Count > 1 ?  i_WheelDataList[i] : i_WheelDataList[0];
+
+                try
+                {
+                    Wheel newWheel = new Wheel(wheelData.manufacturerName, i_MaxAirPressure)
+                    {
+                        CurrentAirPressure = wheelData.currentAirPressure,
+                    };
+
+                    r_Wheels.Add(newWheel);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
+                
+            }
         }
+
 
         internal abstract void FillUp();
 

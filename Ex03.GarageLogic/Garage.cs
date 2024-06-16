@@ -29,11 +29,14 @@ namespace Ex03.GarageLogic
             return isVehicleInGarage;
         }
 
+        //Car
         public void CreateNewVehicle(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber,
-                             string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList,
+                             string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList,
                              float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0,
                              eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
         {
+            const int k_NumOfWheels = 4;
+            const int k_MaxAirPressure = 31;
             object carEngine = null;
 
             if (i_EngineType is eEngineType.Electric)
@@ -46,11 +49,11 @@ namespace Ex03.GarageLogic
                 carEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
             }
 
-            List<Wheel> wheels = CreateListOfWheels(wheelDataList);
-            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, wheels, carEngine) ;
+            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, carEngine, k_NumOfWheels, k_MaxAirPressure) ;
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
+/*        //Truck
         public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
             eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
         {
@@ -59,6 +62,7 @@ namespace Ex03.GarageLogic
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
+        //Motorcycle
         public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber, 
             string i_ModelName, string i_Owner, string i_PhoneNumber, float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0, 
             eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
@@ -76,7 +80,7 @@ namespace Ex03.GarageLogic
 
             Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, motorcycleEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
-        }
+        }*/
 
         private Vehicle GetVehicle(string i_LicenseNumber)
         {
@@ -152,13 +156,13 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public List<Wheel> CreateListOfWheels(List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList)
+        public List<Wheel> CreateListOfWheels(List<(string manufacturerName, float currentAirPressure)> wheelDataList)
         {
             List<Wheel> wheels = new List<Wheel>();
 
-            foreach (var (manufacturerName, currentAirPressure, maxAirPressure) in wheelDataList)
+            foreach (var (manufacturerName, currentAirPressure) in wheelDataList)
             {
-                Wheel wheel = new Wheel(manufacturerName, currentAirPressure, maxAirPressure);
+                Wheel wheel = new Wheel(manufacturerName, currentAirPressure);
                 wheels.Add(wheel);
             }
 
