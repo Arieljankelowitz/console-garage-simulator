@@ -57,10 +57,12 @@ namespace Ex03.GarageLogic
 
         //Truck
         public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
-            eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
+            List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, float i_CurrentFuel)
         {
-            object truckEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel); ;
-            Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, truckEngine);
+            const float k_MaxFuel = 120f;
+            const eFuelType k_FuelType = eFuelType.Soler;
+            object truckEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel); ;
+            Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, truckEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
@@ -157,6 +159,7 @@ namespace Ex03.GarageLogic
                 float chargeToAdd = (float)i_MinutestoCharge / 60;
 
                 electricEngine.FillUp(chargeToAdd);
+                vehicle.calculateRemainingEnergy();
             }
         }
 

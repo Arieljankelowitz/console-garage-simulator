@@ -37,10 +37,10 @@ namespace Ex03.GarageLogic
             m_Owner = i_Owner;
             m_PhoneNumber = i_PhoneNumber;
             m_VehicleStaus = eVehicleStatus.InRepair;
-            m_RemainingEnergy = 100;
             r_Engine = i_Engine;
             r_Wheels = new List<Wheel>(i_NumOfWheels);
             AddWheels(i_WheelDataList, i_MaxAirPressure, i_NumOfWheels);
+            calculateRemainingEnergy();
         }
 
         internal void PumpTires()
@@ -79,7 +79,25 @@ namespace Ex03.GarageLogic
             }
         }
 
+        internal void calculateRemainingEnergy()
+        {
+            float currentEnergy;
+            float maxEnergy;
+            if(r_EngineType is eEngineType.Fuel)
+            {
+                FuelEngine engine = r_Engine as FuelEngine;
+                currentEnergy = engine.CurrentFuel;
+                maxEnergy = engine.MaxFuel;
+            }
+            else
+            {
+                ElectricEngine engine = r_Engine as ElectricEngine;
+                currentEnergy = engine.RemainingBatteryLife;
+                maxEnergy = engine.MaxBatteryLife;
+            }
 
+            m_RemainingEnergy = currentEnergy / maxEnergy;
+        }
         internal abstract void FillUp();
 
         public override string ToString()
@@ -97,7 +115,7 @@ namespace Ex03.GarageLogic
     Model: {1}
     Owner: {2}
     Status: {3}
-    Remaining Energy: {4}%
+    Remaining Energy: {4:P2}
     Engine Type: {5}
     Engine: {6}
     Wheels: 
