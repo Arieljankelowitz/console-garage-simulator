@@ -20,7 +20,15 @@ namespace Ex03.GarageLogic
         public float CurrentAirPressure
         {
             get { return m_CurrentAirPressure; }
-            set { CurrentAirPressure = value; }
+            set 
+            {
+                if (value > r_MaxAirPressure)
+                {
+                    throw new ArgumentException("Current air pressure cannot exceed maximum air pressure.");
+                }
+
+                m_CurrentAirPressure = value; 
+            }
         }
 
         public float MaxAirPressure
@@ -29,19 +37,13 @@ namespace Ex03.GarageLogic
 
 
         }
-        public Wheel(string i_ManufacturName, float i_CurrentAirPressure, float i_MaxAirPressure)
+        public Wheel(string i_ManufacturName, float i_MaxAirPressure)
         {
 
             r_ManufacturName = i_ManufacturName;
             // maybe to do a and exception check here
             r_MaxAirPressure = i_MaxAirPressure;
 
-            if (i_CurrentAirPressure > r_MaxAirPressure)
-            {
-                //need to check if this is the correct exception and how to handle them
-                throw new ArgumentException("Current air pressure cannot exceed maximum air pressure.");
-            }
-            m_CurrentAirPressure = i_CurrentAirPressure;
         }
 
         internal void PumpTire()
