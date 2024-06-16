@@ -177,12 +177,13 @@ namespace Ex_03
             return (licenseType, engineVolume);
         }
 
-        internal static (string containsDangerousMaterials, float cargoTankVolume) NewTruck()
+        internal static (bool containsDangerousMaterials, float cargoTankVolume) NewTruck()
         {
             
             string[] dangerousMaterialsOptions = { "yes", "no" };
             string dangerousMaterialsMessage = "Does the truck contain dangerous materials? ";
-            string containsDangerousMaterials = ChooseOption(dangerousMaterialsMessage, dangerousMaterialsOptions, 2);
+            bool containsDangerousMaterials = ChooseOption(dangerousMaterialsMessage, dangerousMaterialsOptions, 2) == "yes";
+            
 
             string cargoTankVolumeMessage = "What is the cargo tank volume of your truck? ";
             Console.WriteLine(cargoTankVolumeMessage);

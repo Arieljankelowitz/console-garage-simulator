@@ -49,6 +49,7 @@ namespace GarageLogic
                         break;
                     case "7. Display vehicle info":
                         frontOffice.DisplayVehicleInfo();
+                        Console.Clear();
                         break;
                     case "8. Leave Garage":
                         frontOffice.BeingServiced = false;

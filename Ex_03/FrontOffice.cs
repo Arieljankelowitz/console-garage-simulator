@@ -122,7 +122,7 @@ namespace Ex_03
             string chosenFuelString = ConnsoleUtil.ChooseOption(fuelMessage, fuelOptions).Replace(" ", "");
             eFuelType chosenFuel = ConnsoleUtil.ParseEnum<eFuelType>(chosenFuelString);
             Console.WriteLine("How many ltrs to add?");
-            int litersToAdd = int.Parse(Console.ReadLine()); 
+            float litersToAdd = float.Parse(Console.ReadLine()); 
             
             try
             {
@@ -158,6 +158,8 @@ namespace Ex_03
 
             string vehicleInfo = m_Garage.DisplayVehicle(vehicleLicense);
             Console.WriteLine(vehicleInfo);
+            Console.WriteLine("Press any key to go back to main menu...");
+            Console.ReadLine();
         }
 
         internal void Goodbye()
@@ -205,15 +207,10 @@ namespace Ex_03
         {
             List<(string manufacturerName, float currentAirPressure)> wheelDataList;
             int numOfWheelsToAdd;
-            Console.WriteLine("Thank you for choosing our Garage, let's start registering");
-            Console.WriteLine("Please enter your name: ");
-            string ownerName = Console.ReadLine();
 
-            Console.WriteLine("Please enter your phone number: ");
-            string phoneNumber = Console.ReadLine();
+            string ownerName, phoneNumber, vehicleModel;
+            getOwnerDetails(i_VehicleType, out ownerName, out phoneNumber, out vehicleModel);
 
-            Console.WriteLine($"Please enter the {i_VehicleType}'s model: ");
-            string vehicleModel = Console.ReadLine();
             Console.Clear();
 
             if (i_VehicleType.Contains("Car"))
@@ -224,20 +221,21 @@ namespace Ex_03
                 wheelDataList = collectWheelData(numOfWheelsToAdd);
                 Console.Clear();
 
-                try
+                if (i_VehicleType.Contains("Electric"))
                 {
-                    if (i_VehicleType.Contains("Electric"))
-                    {
-                        float currentBatteryLife = ConnsoleUtil.NewElectric();
-                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                                                  wheelDataList, currentBatteryLife);
-                    }
-                    else
-                    {
-                        float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                                                  wheelDataList, i_CurrentFuel: currentFuel);
-                    }
+                    float currentBatteryLife = ConnsoleUtil.NewElectric();
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                      wheelDataList, currentBatteryLife);
+
+                    vehicleRegistered();
+                }
+                else
+                {
+
+                    float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+
+                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                        wheelDataList, i_CurrentFuel: currentFuel);
 
                     vehicleRegistered();
                 }
@@ -303,18 +301,27 @@ namespace Ex_03
             }
             else if (i_VehicleType.Contains("Truck"))
             {
-                ConnsoleUtil.NewTruck();
-                if (i_VehicleType.Contains("Electric"))
-                {
-                    (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                    //m_Garage.CreateNewVehicle();
-                }
-                else
-                {
+                numOfWheelsToAdd = 12;
+                wheelDataList = collectWheelData(numOfWheelsToAdd);
 
-                    //m_Garage.CreateNewVehicle();
-                }
+                (bool containsDangerousMaterials, float cargoTankVolume) truckInfo = ConnsoleUtil.NewTruck();
+                float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+                m_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                        wheelDataList, i_CurrentFuel: currentFuel);
+
+                vehicleRegistered();
             }
+        }
+
+        private static void getOwnerDetails(string i_VehicleType, out string o_OwnerName, out string o_PhoneNumber, out string o_VehicleModel)
+        {
+            Console.WriteLine("Thank you for choosing our Garage, lets start registering");
+            Console.WriteLine("Please enter your name: ");
+            o_OwnerName = Console.ReadLine();
+            Console.WriteLine("Please enter your phone number: ");
+            o_PhoneNumber = Console.ReadLine();
+            Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
+            o_VehicleModel = Console.ReadLine();
         }
 
 
