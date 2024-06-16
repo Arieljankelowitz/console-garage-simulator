@@ -56,13 +56,13 @@ namespace Ex03.GarageLogic
         }
 
         //Truck
-        public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
+      /*  public void CreateNewVehicle(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber, string i_ModelName, string i_Owner, string i_PhoneNumber,
             eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
         {
             object truckEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel); ;
             Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, truckEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
-        }
+        }*/
 
         //Motorcycle
         public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
@@ -72,8 +72,11 @@ namespace Ex03.GarageLogic
 
             if (i_EngineType is eEngineType.Electric)
             {
-                const float k_MaxBatteryLife = 2.5f;
-                motorcycleEngine = new ElectricEngine(k_MaxBatteryLife, i_CurrentBatteryLife);
+               
+                    const float k_MaxBatteryLife = 2.5f;
+                    motorcycleEngine = new ElectricEngine(k_MaxBatteryLife, i_CurrentBatteryLife);
+              
+
             }
             else if (i_EngineType is eEngineType.Fuel)
             {
