@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic
                 carEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel);
             }
 
-            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, carEngine) ;
+            Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, carEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
@@ -66,21 +66,23 @@ namespace Ex03.GarageLogic
 
         //Motorcycle
         public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
-            string i_ModelName, string i_Owner, string i_PhoneNumber, float i_MaxBatteryLife = 0, float i_CurrentBatteryLife = 0,
-            eFuelType i_FuelType = eFuelType.Octane96, float i_CurrentFuel = 0, float i_MaxFuel = 0)
+            string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, float i_CurrentBatteryLife = 0, float i_CurrentFuel = 0)
         {
             object motorcycleEngine = null;
 
             if (i_EngineType is eEngineType.Electric)
             {
-                motorcycleEngine = new ElectricEngine(i_MaxBatteryLife, i_CurrentBatteryLife);
+                const float k_MaxBatteryLife = 2.5f;
+                motorcycleEngine = new ElectricEngine(k_MaxBatteryLife, i_CurrentBatteryLife);
             }
             else if (i_EngineType is eEngineType.Fuel)
             {
-                motorcycleEngine = new FuelEngine(i_FuelType, i_CurrentFuel, i_MaxFuel);
+                const float k_MaxFuel = 5.5f;
+                const eFuelType k_FuelType = eFuelType.Octane98;
+                motorcycleEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel);
             }
 
-            Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, motorcycleEngine);
+            Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, motorcycleEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
