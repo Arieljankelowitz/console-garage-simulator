@@ -6,6 +6,7 @@ namespace Ex03.GarageLogic
     {
         private readonly int r_NumberOfDoors;
         private eColor m_CarColor;
+        private const int k_NumOfWheels = 4;
 
         public Car(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber,
                       string i_ModelName, string i_Owner, string i_PhoneNumber, List<Wheel> i_Wheels, object i_Engine)

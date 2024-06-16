@@ -166,7 +166,8 @@ namespace Ex_03
             Console.WriteLine("Thank you for coming to the Garage, have a good day! (press any key to quit)");
             Console.ReadLine();
         }
-        internal List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> AddWheelsToVehicle(string i_LicenseNumber)
+
+        private List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> AddWheelsToVehicle(string i_LicenseNumber)
         {
             List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = new List<(string, float, float)>();
 
@@ -177,7 +178,7 @@ namespace Ex_03
 
                 if (choice == "Uniformly (all wheels the same)")
                 {
-                    (string manufacturerName, float currentAirPressure, float maxAirPressure, int numberOfWheels) = ConnsoleUtil.CollectUniformWheelData();
+                    (string manufacturerName, float currentAirPressure) = ConnsoleUtil.CollectUniformWheelData();
 
                     for (int i = 0; i < numberOfWheels; i++)
                     {
@@ -200,11 +201,6 @@ namespace Ex_03
         }
 
 
-
-
-
-
-
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
             Console.WriteLine("Thank you for choosing our Garage, lets start registering");
@@ -217,7 +213,9 @@ namespace Ex_03
             Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
             string vehicleModel = Console.ReadLine();
             // for david to connect the back end and the front end
+            Console.Clear();
             List<(string manufacturerName, float currentAirPressure, float maxAirPressure)> wheelDataList = AddWheelsToVehicle(i_LicenseNumber);
+            Console.Clear();
 
             if(i_VehicleType.Contains("Car"))
             {

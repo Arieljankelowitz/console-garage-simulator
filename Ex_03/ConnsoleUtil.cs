@@ -196,7 +196,7 @@ namespace Ex_03
 
        
 
-        internal static (string manufacturerName, float currentAirPressure, float maxAirPressure, int numberOfWheels) CollectUniformWheelData()
+        internal static (string manufacturerName, float currentAirPressure) CollectUniformWheelData()
         {
             while (true)
             {
@@ -211,19 +211,19 @@ namespace Ex_03
                         throw new ArgumentException("Invalid input for air pressure. Please enter a valid number.");
                     }
 
-                    Console.Write("Enter max air pressure for the wheels: ");
+/*                    Console.Write("Enter max air pressure for the wheels: ");
                     if (!float.TryParse(Console.ReadLine(), out float maxAirPressure))
                     {
                         throw new ArgumentException("Invalid input for max air pressure. Please enter a valid number.");
-                    }
+                    }*/
 
-                    Console.Write("Enter the number of wheels to add: ");
+/*                    Console.Write("Enter the number of wheels to add: ");
                     if (!int.TryParse(Console.ReadLine(), out int numberOfWheels))
                     {
                         throw new ArgumentException("Invalid input for number of wheels. Please enter a valid number.");
-                    }
+                    }*/
 
-                    return (manufacturerName, currentAirPressure, maxAirPressure, numberOfWheels);
+                    return (manufacturerName, currentAirPressure);
                 }
                 catch (Exception ex)
                 {
