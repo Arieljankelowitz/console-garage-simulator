@@ -135,7 +135,7 @@ namespace Ex_03
 
         internal static (string fuelType, float maxFuel, float currentFuel) NewFuel()
         {
-            (string fuelType, float maxFuel, float currentFuel) engineData = ("", 0, 0);
+            (string fuelType, float currentFuel, float maxFuel) engineData = ("", 0, 0);
             string message = "Select the correct type of fuel for your car";
             string[] fuelTypes = { "Soler", "Octane95", "Octane96", "Octane98" };
 
