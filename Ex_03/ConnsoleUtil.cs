@@ -194,7 +194,30 @@ namespace Ex_03
             return (carColor, numberOfDoors);            
         }
 
-       
+        internal static ( eLicenseType LicenseType, int EngineVolume) NewMotorcycle()
+        {
+    ;
+
+            
+            string[] licenseTypeOptions = { "A", "A1", "AA", "B1" };
+            string licenseTypeMessage = "What is the license type of your motorcycle? ";
+            eLicenseType licenseType = ParseEnum<eLicenseType>(ChooseOption(licenseTypeMessage, licenseTypeOptions));
+
+            
+            string engineVolumeMessage = "What is the engine volume of your motorcycle? ";
+            Console.WriteLine(engineVolumeMessage);
+            int engineVolume;
+            while (!int.TryParse(Console.ReadLine(), out engineVolume) || engineVolume <= 0)
+            {
+                Console.WriteLine("Please enter a valid positive integer for the engine volume.");
+            }
+
+            return (licenseType, engineVolume);
+        }
+
+        internal static void NewTruck() { }
+
+
 
         internal static (string manufacturerName, float currentAirPressure) CollectUniformWheelData()
         {
@@ -255,9 +278,7 @@ namespace Ex_03
         }
 
 
-        internal static void NewMotorcycle() { }
-
-        internal static void NewTruck() { }
+ 
 
         public static T ParseEnum<T>(string value)
         {

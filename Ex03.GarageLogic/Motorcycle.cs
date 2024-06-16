@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +15,10 @@ namespace Ex03.GarageLogic
         private const int k_MaxAirPressure = 33;
 
         public Motorcycle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
-                                        string i_ModelName, string i_Owner, string i_PhoneNumber, object i_Engine)
-            : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, 
-                                Utils.InitializeWheels(new Wheel("China", 31, 31), 2), i_Engine)
+                                        string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, object i_Engine)
+                                : base(i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, k_NumOfWheels, k_MaxAirPressure, i_Engine)
         {
+            
             r_EngineVolume = i_EngineVolume;
             r_LicenseType = i_LicenseType;
         }
@@ -41,4 +41,3 @@ namespace Ex03.GarageLogic
         }
     }
 }
-*/

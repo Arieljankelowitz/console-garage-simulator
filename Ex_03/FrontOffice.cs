@@ -242,11 +242,11 @@ namespace Ex_03
             }
             else if(i_VehicleType.Contains("Motorcycle"))
             {
-                ConnsoleUtil.NewMotorcycle();
+                (eLicenseType LicenseType, int EngineVolume) MotorCycleInfo = ConnsoleUtil.NewMotorcycle();
                 if (i_VehicleType.Contains("Electric"))
                 {
                     (float maxBatteryLife, float currentBatteryLife) = ConnsoleUtil.NewElectric();
-                   /* m_Garage.CreateNewVehicle();*/
+                   m_Garage.CreateNewVehicle(i_LicenseNumber);
                 }
                 else
                 {
