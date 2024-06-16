@@ -8,6 +8,8 @@ namespace Ex03.GarageLogic
 {
     public class Garage
     {
+        private const float k_MaxElectricCarBattery = 3.5F;
+        private const int k_MaxFuelCar = 45;
         private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
 
         public List<string> VehiclesInGarage { get { return new List<string>(r_VehiclesInGarage.Keys); } } 
