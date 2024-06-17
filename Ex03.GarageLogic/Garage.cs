@@ -93,12 +93,6 @@ namespace Ex03.GarageLogic
             insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-        private Vehicle GetVehicle(string i_LicenseNumber)
-        {
-            Vehicle vehicle = r_VehiclesInGarage[i_LicenseNumber];
-
-            return vehicle;
-        }
 
         public List<string> FilterVehicles(eVehicleStatus i_Status)
         {

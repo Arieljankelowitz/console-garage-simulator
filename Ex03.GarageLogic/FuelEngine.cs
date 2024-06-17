@@ -44,6 +44,11 @@ namespace Ex03.GarageLogic
             {
                 throw new InvalidOperationException("Fuel tank is already full.");
             }
+            if ((i_FuelAmount + m_CurrentFuel) > r_MaxFuel)
+            {
+                throw new ArgumentOutOfRangeException("You trying to put to much fuel in.");
+            }
+            m_CurrentFuel += i_FuelAmount;
 
             if (i_FuelAmount <= 0)
             {

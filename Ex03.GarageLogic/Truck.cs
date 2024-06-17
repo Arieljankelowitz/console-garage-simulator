@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
     Truck Specs
         Contains Toxins: {0}
         Cargo Tank Volume: {1} liters
-{2}", m_ContainsToxins, r_CargoTankVolume, baseInfo);
+    {2}", m_ContainsToxins, r_CargoTankVolume, baseInfo);
 
             return output;
         }
