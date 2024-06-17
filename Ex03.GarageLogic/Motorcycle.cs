@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 
 namespace Ex03.GarageLogic
@@ -25,13 +24,13 @@ namespace Ex03.GarageLogic
         {
             if (EngineType is eEngineType.Fuel)
             {
-                (Engine as FuelEngine).FillUp(i_AmountToFill, k_MotorcycleFuelType);
+                (Engine as FuelEngine)?.FillUp(i_AmountToFill, k_MotorcycleFuelType);
             }
             else
             {
-                (Engine as ElectricEngine).FillUp(i_AmountToFill);
+                (Engine as ElectricEngine)?.FillUp(i_AmountToFill);
             }
-            calculateRemainingEnergy();
+            CalculateRemainingEnergy();
         }
 
         public override string ToString()

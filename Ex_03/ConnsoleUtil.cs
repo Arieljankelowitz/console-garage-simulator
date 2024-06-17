@@ -2,29 +2,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex_03
 {
     internal class ConnsoleUtil
     {
-        public static string ChooseOption(string i_message, string[] i_Options, int i_OptionsPerLine = 4, int i_StartX = 0)
+        public static string ChooseOption(string i_Message, string[] i_Options, int i_OptionsPerLine = 4, int i_StartX = 0)
         {
-            int i_SpacingPerLine = i_Options.Max(option => option.Length) + 2;
+            int spacingPerLine = i_Options.Max(i_Option => i_Option.Length) + 2;
             int startY = Console.CursorTop + 2;
 
             int currentSelectedOption = 0;
 
             ConsoleKey key;
             Console.CursorVisible = false;
-            Console.WriteLine(i_message);
+            Console.WriteLine(i_Message);
 
             do
             {
                 for (int i = 0; i < i_Options.Length; i++)
                 {
-                    Console.SetCursorPosition(i_StartX + (i % i_OptionsPerLine) * i_SpacingPerLine, startY + i / i_OptionsPerLine);
+                    Console.SetCursorPosition(i_StartX + (i % i_OptionsPerLine) * spacingPerLine, startY + i / i_OptionsPerLine);
 
                     if (i == currentSelectedOption)
                     {
@@ -97,21 +95,21 @@ namespace Ex_03
             {
                 throw new FormatException("Invalid format. The correct format is 'hours:minutes'.");
             }
-            if (!int.TryParse(parts[0], out int out_Hours))
+            if (!int.TryParse(parts[0], out int hours))
             {
                 throw new FormatException("Invalid format for hours. Please enter a valid integer.");
             }
 
-            if (!int.TryParse(parts[1], out int out_Minutes))
+            if (!int.TryParse(parts[1], out int minutes))
             {
                 throw new FormatException("Invalid format for minutes. Please enter a valid integer.");
             }
 
-            if (out_Minutes < 0 || out_Minutes >= 60)
+            if (minutes < 0 || minutes >= 60)
             {
                 throw new FormatException("Minutes should be between 0 and 59.");
             }
-            float timeInMin = out_Hours + (out_Minutes / 60f);
+            float timeInMin = hours + minutes / 60f;
             return timeInMin;
         }
 
@@ -158,16 +156,12 @@ namespace Ex_03
 
         internal static ( eLicenseType LicenseType, int EngineVolume) NewMotorcycle()
         {
-    ;
-
-            
             string[] licenseTypeOptions = { "A", "A1", "AA", "B1" };
-            string licenseTypeMessage = "What is the license type of your motorcycle? ";
-            eLicenseType licenseType = ParseEnum<eLicenseType>(ChooseOption(licenseTypeMessage, licenseTypeOptions));
+            const string k_LicenseTypeOfYourMotorcycle = "What is the license type of your motorcycle? ";
+            eLicenseType licenseType = ParseEnum<eLicenseType>(ChooseOption(k_LicenseTypeOfYourMotorcycle, licenseTypeOptions));
 
-            
-            string engineVolumeMessage = "What is the engine volume of your motorcycle? ";
-            Console.WriteLine(engineVolumeMessage);
+            const string k_TheEngineVolumeOfYourMotorcycle = "What is the engine volume of your motorcycle? ";
+            Console.WriteLine(k_TheEngineVolumeOfYourMotorcycle);
             int engineVolume;
             while (!int.TryParse(Console.ReadLine(), out engineVolume) || engineVolume <= 0)
             {
@@ -256,12 +250,9 @@ namespace Ex_03
             }
         }
 
-
- 
-
-        public static T ParseEnum<T>(string value)
+        public static T ParseEnum<T>(string i_Value)
         {
-            return (T)Enum.Parse(typeof(T), value, true);
+            return (T)Enum.Parse(typeof(T), i_Value, true);
         }
 
         public static void BlankSpace()

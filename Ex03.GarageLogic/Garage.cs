@@ -63,7 +63,7 @@ namespace Ex03.GarageLogic
         {
             const float k_MaxFuel = 120f;
             const eFuelType k_FuelType = eFuelType.Soler;
-            object truckEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel); ;
+            object truckEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel);
             Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, truckEngine);
             insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
@@ -93,7 +93,6 @@ namespace Ex03.GarageLogic
             insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
-
         public List<string> FilterVehicles(eVehicleStatus i_Status)
         {
             List<string> listOfFilteredLicenseNumbers = new List<string>();
@@ -106,7 +105,6 @@ namespace Ex03.GarageLogic
                 }
             }
             
-
             return listOfFilteredLicenseNumbers;
         }
         
@@ -144,7 +142,7 @@ namespace Ex03.GarageLogic
             
         }
 
-        public void ReCharge(string i_LicenseNumber, int i_MinutestoCharge)
+        public void ReCharge(string i_LicenseNumber, int i_MinutesToCharge)
         {
             
             if (!r_VehiclesInGarage.ContainsKey(i_LicenseNumber))
@@ -159,38 +157,15 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("This vehicle does not have an electric engine.");
             }
 
-            float chargeToAdd = (float)i_MinutestoCharge / 60;
+            float chargeToAdd = (float)i_MinutesToCharge / 60;
 
             vehicle.FillUp(chargeToAdd);
             
         }
 
-        public List<Wheel> CreateListOfWheels(List<(string manufacturerName, float currentAirPressure)> wheelDataList)
-        {
-            List<Wheel> wheels = new List<Wheel>();
-
-            foreach (var (manufacturerName, currentAirPressure) in wheelDataList)
-            {
-                Wheel wheel = new Wheel(manufacturerName, currentAirPressure);
-                wheels.Add(wheel);
-            }
-
-            return wheels;
-        }
-
         public string DisplayVehicle(string i_LicenseNumber)
         {
-            if (r_VehiclesInGarage.TryGetValue(i_LicenseNumber, out Vehicle vehicle))
-            {
-                return vehicle.ToString();
-            }
-            else
-            {
-                return "Vehicle not found.";
-            }
+            return r_VehiclesInGarage.TryGetValue(i_LicenseNumber, out Vehicle vehicle) ? vehicle.ToString() : "No Vehicle Found";
         }
-
-
-        
     }
 }
