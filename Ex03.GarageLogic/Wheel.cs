@@ -41,7 +41,6 @@ namespace Ex03.GarageLogic
         {
 
             r_ManufacturName = i_ManufacturName;
-            // maybe to do a and exception check here
             r_MaxAirPressure = i_MaxAirPressure;
 
         }

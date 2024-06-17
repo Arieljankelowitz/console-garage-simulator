@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Ex03.GarageLogic
 {
     internal class Motorcycle : Vehicle
     {
         private readonly int r_EngineVolume;
-        private Object r_Engine;
         private readonly eLicenseType r_LicenseType;
         private const int k_NumOfWheels = 2;
         private const int k_MaxAirPressure = 33;

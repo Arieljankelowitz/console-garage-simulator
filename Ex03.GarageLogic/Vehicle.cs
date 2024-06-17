@@ -19,11 +19,7 @@ namespace Ex03.GarageLogic
         private eVehicleStatus m_VehicleStaus;
 
 
-        public string ModelName { get { return r_ModelName; } }
         public string LicenseNumber { get { return r_LicenseNumber; } }
-        public string Owner { get { return m_Owner; } set { m_Owner = value; } }
-        public string PhoneNumber { get { return m_PhoneNumber; } set { m_PhoneNumber = value; } }
-        public float RemainingEnergy { get { return m_RemainingEnergy; } set { m_RemainingEnergy = value; } }
         public eVehicleStatus VehicleStatus { get { return m_VehicleStaus; } set { m_VehicleStaus = value; } }
         public eEngineType EngineType { get { return r_EngineType; } }
         public object Engine { get { return r_Engine; } }
