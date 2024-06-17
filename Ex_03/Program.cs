@@ -17,7 +17,7 @@ namespace GarageLogic
             run();
         }
 
-        public static void run()
+        private static void run()
         {
             FrontOffice frontOffice = new FrontOffice();
 

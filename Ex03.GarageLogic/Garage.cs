@@ -10,14 +10,20 @@ namespace Ex03.GarageLogic
     {
         private readonly Dictionary<string, Vehicle> r_VehiclesInGarage;
 
-        public List<string> VehiclesInGarage { get { return new List<string>(r_VehiclesInGarage.Keys); } } 
+        public List<string> VehiclesInGarage
+        {
+            get
+            {
+                return new List<string>(r_VehiclesInGarage.Keys);
+            }
+        } 
 
         public Garage() 
         { 
             r_VehiclesInGarage = new Dictionary<string, Vehicle>();
         }
 
-        private void InsertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
+        private void insertVehicle(string i_LicenseNumber, Vehicle i_Vehicle)
         {
             r_VehiclesInGarage.Add(i_LicenseNumber, i_Vehicle);
         } 
@@ -50,7 +56,7 @@ namespace Ex03.GarageLogic
             }
 
             Vehicle newVehicle = new Car(i_Color, i_NumOfDoors, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, carEngine);
-            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
+            insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
         //Truck
@@ -61,7 +67,7 @@ namespace Ex03.GarageLogic
             const eFuelType k_FuelType = eFuelType.Soler;
             object truckEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel); ;
             Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, truckEngine);
-            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
+            insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
         //Motorcycle
@@ -83,7 +89,7 @@ namespace Ex03.GarageLogic
             }
 
             Vehicle newVehicle = new Motorcycle(i_LicenseType, i_EngineVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, motorcycleEngine);
-            InsertVehicle(newVehicle.LicenseNumber, newVehicle);
+            insertVehicle(newVehicle.LicenseNumber, newVehicle);
         }
 
         private Vehicle GetVehicle(string i_LicenseNumber)

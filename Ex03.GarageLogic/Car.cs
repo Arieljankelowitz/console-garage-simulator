@@ -21,13 +21,13 @@ namespace Ex03.GarageLogic
         internal override void FillUp(float i_AmountToFill)
         {
            if(EngineType is eEngineType.Fuel)
-            {
+           {
                 (Engine as FuelEngine).FillUp(i_AmountToFill, k_CarFuelType);
-            }
+           }
            else
-            {
+           {
                 (Engine as ElectricEngine).FillUp(i_AmountToFill);
-            }
+           }
 
            calculateRemainingEnergy();
         }

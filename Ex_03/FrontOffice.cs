@@ -6,11 +6,12 @@ namespace Ex_03
 {
     internal class FrontOffice
     {
-        private Garage m_Garage;
-        public bool BeingServiced { get; set; } = true;
+        private readonly Garage r_Garage;
+        public bool BeingServiced { get; set; }
         public FrontOffice()
         {
-            m_Garage = new Garage();
+            r_Garage = new Garage();
+            BeingServiced = true;
         }
         internal void Welcome()
         {
@@ -23,9 +24,9 @@ namespace Ex_03
         {
             string[] serviceOptions = {"1. Insert a new vehicle", "2. Display vehicles", "3. Change vehicle status",
                 "4. Inflate vehicle tires", "5. Refuel vehicle", "6. Recharge vehicle", "7. Display vehicle info", "8. Leave Garage"};
-            string message = "Please select a service.";
-
-            string chosenService = ConnsoleUtil.ChooseOption(message, serviceOptions, 1);
+            const string k_PleaseSelectAService = "Please select a service.";
+            const int k_OptionsPerLine = 1;
+            string chosenService = ConnsoleUtil.ChooseOption(k_PleaseSelectAService, serviceOptions, k_OptionsPerLine);
 
             return chosenService;
 
@@ -36,9 +37,9 @@ namespace Ex_03
             string vehicleChosen = chooseAVehicle();
             string vehicleLicenseNum = enterLicenseNumber(vehicleChosen);
 
-            if (m_Garage.IsVehicleInGarage(vehicleLicenseNum))
+            if (r_Garage.IsVehicleInGarage(vehicleLicenseNum))
             {
-                VehicleAlreadyRegistered(vehicleLicenseNum);
+                vehicleAlreadyRegistered(vehicleLicenseNum);
             }
             else
             {
@@ -49,9 +50,9 @@ namespace Ex_03
 
         internal void DisplayVehicles()
         {
-            string displayMessage = "Filter Vehicles based on: ";
+            const string k_FilterVehiclesBasedOn = "Filter Vehicles based on: ";
             string[] filterOptions = { "All", "In Repair", "Repaired", "Payed For" };
-            string filter = ConnsoleUtil.ChooseOption(displayMessage, filterOptions);
+            string filter = ConnsoleUtil.ChooseOption(k_FilterVehiclesBasedOn, filterOptions);
 
             List<string> vehicleLicenses;
 
@@ -59,11 +60,11 @@ namespace Ex_03
             try
             {
                 eVehicleStatus filterStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(filter.Replace(" ", ""));
-                vehicleLicenses = m_Garage.FilterVehicles(filterStatus);
+                vehicleLicenses = r_Garage.FilterVehicles(filterStatus);
             }
             catch (Exception ex)
             {
-                vehicleLicenses = m_Garage.VehiclesInGarage;
+                vehicleLicenses = r_Garage.VehiclesInGarage;
             }
 
             foreach (string vehicleLicense in vehicleLicenses) 
@@ -77,12 +78,12 @@ namespace Ex_03
             Console.WriteLine("Please enter the license number of the vehicle you'd like to update: ");
             string vehicleLicense = Console.ReadLine();
 
-            string statusMessage = "select the new status";
+            const string k_SelectTheNewStatus = "select the new status";
             string[] statusOptions = { "In Repair", "Repaired", "Payed For" };
-            string updatedStatusString = ConnsoleUtil.ChooseOption(statusMessage, statusOptions).Replace(" ", "");
+            string updatedStatusString = ConnsoleUtil.ChooseOption(k_SelectTheNewStatus, statusOptions).Replace(" ", "");
             eVehicleStatus updatedStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(updatedStatusString);
 
-            m_Garage.ChangeStatus(updatedStatus, vehicleLicense);
+            r_Garage.ChangeStatus(updatedStatus, vehicleLicense);
 
             Console.Clear();
             Console.WriteLine("Status Updated.");
@@ -95,8 +96,8 @@ namespace Ex_03
 
             try
             {
-                m_Garage.PumpTires(vehicleLicense);
-                Console.WriteLine("Succesfully filled tires");
+                r_Garage.PumpTires(vehicleLicense);
+                Console.WriteLine("Successfully filled tires");
             }
             catch(Exception ex)
             {
@@ -110,17 +111,18 @@ namespace Ex_03
             Console.WriteLine("Please enter the license number of the vehicle you'd like to fill up: ");
             string vehicleLicense = Console.ReadLine();
 
-            string fuelMessage = "select the new status";
+            const string k_SelectTheNewStatus = "select the new status";
             string[] fuelOptions = { " Soler", "Octane95", "Octane96", "Octane98" };
-            string chosenFuelString = ConnsoleUtil.ChooseOption(fuelMessage, fuelOptions).Replace(" ", "");
+            string chosenFuelString = ConnsoleUtil.ChooseOption(k_SelectTheNewStatus, fuelOptions).Replace(" ", "");
             eFuelType chosenFuel = ConnsoleUtil.ParseEnum<eFuelType>(chosenFuelString);
-            Console.WriteLine("How many ltrs to add?");
+            Console.WriteLine("How many litres to add?");
             
             
             try
             {
-                float litersToAdd = float.Parse(Console.ReadLine());
-                m_Garage.Refuel(vehicleLicense, chosenFuel, litersToAdd);
+                string litersGivenToAdd = Console.ReadLine();
+                float.TryParse(litersGivenToAdd, out float litersToAdd);
+                r_Garage.Refuel(vehicleLicense, chosenFuel, litersToAdd);
             }
             catch(Exception ex)
             {
@@ -133,15 +135,17 @@ namespace Ex_03
             Console.WriteLine("Please enter the license number of the vehicle you'd like charge: ");
             string vehicleLicense = Console.ReadLine();
             Console.WriteLine("How many minutes would you like to charge?");
-            int minutesToCharge = int.Parse(Console.ReadLine());
+            
             try
             {
-                m_Garage.ReCharge(vehicleLicense, minutesToCharge);
-                Console.WriteLine("Succesfully put to charge");
+                string minutesGivenToCharge = Console.ReadLine();
+                int.TryParse(minutesGivenToCharge, out int minutesToCharge);
+                r_Garage.ReCharge(vehicleLicense, minutesToCharge);
+                Console.WriteLine("Successfully put to charge");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid");
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -150,7 +154,7 @@ namespace Ex_03
             Console.WriteLine("Please enter the license number of the vehicle you'd like display: ");
             string vehicleLicense = Console.ReadLine();
 
-            string vehicleInfo = m_Garage.DisplayVehicle(vehicleLicense);
+            string vehicleInfo = r_Garage.DisplayVehicle(vehicleLicense);
             Console.WriteLine(vehicleInfo);
             Console.WriteLine("Press any key to go back to main menu...");
             Console.ReadLine();
@@ -170,7 +174,8 @@ namespace Ex_03
             try
             {
                 string[] options = { "Uniformly (all wheels the same)", "Individually (specify details for each wheel)" };
-                string choice = ConnsoleUtil.ChooseOption("Do you want to add wheels uniformly or individually?", options);
+                const string k_WheelsUniformlyOrIndividually = "Do you want to add wheels uniformly or individually?";
+                string choice = ConnsoleUtil.ChooseOption(k_WheelsUniformlyOrIndividually, options);
 
                 if (choice == "Uniformly (all wheels the same)")
                 {
@@ -196,7 +201,6 @@ namespace Ex_03
             return wheelDataList;
         }
 
-
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
             List<(string manufacturerName, float currentAirPressure)> wheelDataList;
@@ -218,7 +222,7 @@ namespace Ex_03
                 if (i_VehicleType.Contains("Electric"))
                 {
                     float currentBatteryLife = ConnsoleUtil.NewElectric();
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                    r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
                       wheelDataList, currentBatteryLife);
 
                     vehicleRegistered();
@@ -228,7 +232,7 @@ namespace Ex_03
 
                     float currentFuel = ConnsoleUtil.CurrentFuelAmount();
 
-                    m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                    r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
                         wheelDataList, i_CurrentFuel: currentFuel);
 
                     vehicleRegistered();
@@ -243,7 +247,7 @@ namespace Ex_03
                 if (i_VehicleType.Contains("Electric"))
                 {
                     float currentBatteryLife = ConnsoleUtil.NewElectric();
-                    m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
+                    r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
             vehicleModel, ownerName, phoneNumber, wheelDataList, currentBatteryLife);
 
                     vehicleRegistered();
@@ -251,7 +255,7 @@ namespace Ex_03
                 else
                 {
                     float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                    m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                    r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
                          wheelDataList, i_CurrentFuel: currentFuel);
 
                     vehicleRegistered();
@@ -264,7 +268,7 @@ namespace Ex_03
 
                 (bool containsDangerousMaterials, float cargoTankVolume) truckInfo = ConnsoleUtil.NewTruck();
                 float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                m_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                r_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
                         wheelDataList, i_CurrentFuel: currentFuel);
 
                 vehicleRegistered();
@@ -285,20 +289,20 @@ namespace Ex_03
         private static void vehicleRegistered()
         {
             Console.Clear();
-            Console.WriteLine("Vehicle Reigstered!");
+            Console.WriteLine("Vehicle Registered!");
             ConnsoleUtil.BlankSpace();
         }
 
-        private void VehicleAlreadyRegistered(string vehicleLicenseNum)
+        private void vehicleAlreadyRegistered(string i_VehicleLicenseNum)
         {
             Console.WriteLine("Vehicle already registered, changing status to 'In Repair'");
             eVehicleStatus updatedStatus = eVehicleStatus.InRepair;
-            m_Garage.ChangeStatus(updatedStatus, vehicleLicenseNum);
+            r_Garage.ChangeStatus(updatedStatus, i_VehicleLicenseNum);
         }
 
-        private static string enterLicenseNumber(string vehicleChosen)
+        private static string enterLicenseNumber(string i_VehicleChosen)
         {
-            Console.WriteLine("Please enter the License Number of the {0}: ", vehicleChosen);
+            Console.WriteLine("Please enter the License Number of the {0}: ", i_VehicleChosen);
             string vehicleLicenseNum = Console.ReadLine();
 
             return vehicleLicenseNum;
@@ -308,8 +312,9 @@ namespace Ex_03
         {
             string[] supportedVehicles = { "Fuel-Based Motorcycle", "Electric Motorcycle", "Fuel-Based Car",
                 "Electric Car", "Fuel-Based Truck" };
-            string message = "Choose your vehicle: ";
-            string vehicleChosen = ConnsoleUtil.ChooseOption(message, supportedVehicles, 2);
+            const string k_ChooseYourVehicle = "Choose your vehicle: ";
+            const int k_OptionsPerLine = 2;
+            string vehicleChosen = ConnsoleUtil.ChooseOption(k_ChooseYourVehicle, supportedVehicles, k_OptionsPerLine);
 
             return vehicleChosen;
         }
