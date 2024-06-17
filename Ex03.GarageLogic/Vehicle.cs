@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         private readonly string r_ModelName;
         private readonly string r_LicenseNumber;
 
-        private string m_Owner;
+        private readonly string r_Owner;
         private string m_PhoneNumber;
 
         private float m_RemainingEnergy;
@@ -32,13 +32,13 @@ namespace Ex03.GarageLogic
             r_ModelName = i_ModelName;
             r_LicenseNumber = i_LicenseNumber;
             r_EngineType = i_EngineType;
-            m_Owner = i_Owner;
+            r_Owner = i_Owner;
             m_PhoneNumber = i_PhoneNumber;
             m_VehicleStaus = eVehicleStatus.InRepair;
             r_Engine = i_Engine;
             r_Wheels = new List<Wheel>(i_NumOfWheels);
             AddWheels(i_WheelDataList, i_MaxAirPressure, i_NumOfWheels);
-            calculateRemainingEnergy();
+            CalculateRemainingEnergy();
         }
 
         internal void PumpTires()
@@ -69,7 +69,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal void calculateRemainingEnergy()
+        internal void CalculateRemainingEnergy()
         {
             float currentEnergy;
             float maxEnergy;
@@ -104,12 +104,13 @@ namespace Ex03.GarageLogic
     License Number: {0}
     Model: {1}
     Owner: {2}
+    Phone Number: {8}
     Status: {3}
     Remaining Energy: {4:P2}
     Engine Type: {5}
     Engine: {6}
     Wheels: 
-{7}", r_LicenseNumber, r_ModelName, m_Owner, m_VehicleStaus, m_RemainingEnergy, r_EngineType, engineInfo, wheelsInfo);
+{7}", r_LicenseNumber, r_ModelName, r_Owner, m_VehicleStaus, m_RemainingEnergy, r_EngineType, engineInfo, wheelsInfo, m_PhoneNumber);
 
             return output;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Ex03.GarageLogic
 {
@@ -22,9 +21,9 @@ namespace Ex03.GarageLogic
         internal override void FillUp(float i_AmountToFill)
         {
 
-            (Engine as FuelEngine).FillUp(i_AmountToFill, k_TruckFuelType);
+            (Engine as FuelEngine)?.FillUp(i_AmountToFill, k_TruckFuelType);
 
-            calculateRemainingEnergy();
+            CalculateRemainingEnergy();
         }
  
         public override string ToString()
