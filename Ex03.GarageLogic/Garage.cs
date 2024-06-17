@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
             object truckEngine = new FuelEngine(k_FuelType, i_CurrentFuel, k_MaxFuel); ;
             Vehicle newVehicle = new Truck(i_ContainsToxins, i_CargoTankVolume, i_EngineType, i_LicenseNumber, i_ModelName, i_Owner, i_PhoneNumber, i_WheelDataList, truckEngine);
             InsertVehicle(newVehicle.LicenseNumber, newVehicle);
-        }*/
+        }
 
         //Motorcycle
         public void CreateNewVehicle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
