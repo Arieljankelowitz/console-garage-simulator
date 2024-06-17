@@ -33,26 +33,19 @@ namespace Ex_03
 
         internal void InsertVehicle()
         {
-            string[] supportedVehicles = { "Fuel-Based Motorcycle", "Electric Motorcycle", "Fuel-Based Car", 
-                "Electric Car", "Fuel-Based Truck" };
-            string message = "Choose your vehicle: " +
-                "";
-            string vehicleChosen = ConnsoleUtil.ChooseOption(message, supportedVehicles, 2);
-
-            Console.WriteLine("Please enter the License Number of the {0}: ", vehicleChosen);
-            string vehicleLicenseNum = Console.ReadLine();
+            string vehicleChosen = chooseAVehicle();
+            string vehicleLicenseNum = enterLicenseNumber(vehicleChosen);
 
             if (m_Garage.IsVehicleInGarage(vehicleLicenseNum))
             {
-                Console.WriteLine("Vehicle already registered, changing status to 'In Repair'");
-                eVehicleStatus updatedStatus = eVehicleStatus.InRepair;
-                m_Garage.ChangeStatus(updatedStatus, vehicleLicenseNum);
-            } 
+                VehicleAlreadyRegistered(vehicleLicenseNum);
+            }
             else
             {
                 registerNewVehicle(vehicleChosen, vehicleLicenseNum);
             }
         }
+
 
         internal void DisplayVehicles()
         {
@@ -294,6 +287,31 @@ namespace Ex_03
             Console.Clear();
             Console.WriteLine("Vehicle Reigstered!");
             ConnsoleUtil.BlankSpace();
+        }
+
+        private void VehicleAlreadyRegistered(string vehicleLicenseNum)
+        {
+            Console.WriteLine("Vehicle already registered, changing status to 'In Repair'");
+            eVehicleStatus updatedStatus = eVehicleStatus.InRepair;
+            m_Garage.ChangeStatus(updatedStatus, vehicleLicenseNum);
+        }
+
+        private static string enterLicenseNumber(string vehicleChosen)
+        {
+            Console.WriteLine("Please enter the License Number of the {0}: ", vehicleChosen);
+            string vehicleLicenseNum = Console.ReadLine();
+
+            return vehicleLicenseNum;
+        }
+
+        private static string chooseAVehicle()
+        {
+            string[] supportedVehicles = { "Fuel-Based Motorcycle", "Electric Motorcycle", "Fuel-Based Car",
+                "Electric Car", "Fuel-Based Truck" };
+            string message = "Choose your vehicle: ";
+            string vehicleChosen = ConnsoleUtil.ChooseOption(message, supportedVehicles, 2);
+
+            return vehicleChosen;
         }
     }
 }

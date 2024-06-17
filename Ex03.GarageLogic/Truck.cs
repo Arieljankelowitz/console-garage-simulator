@@ -12,6 +12,7 @@ namespace Ex03.GarageLogic
         private readonly float r_CargoTankVolume;
         private const int k_NumOfWheels = 12;
         private const int k_MaxAirPressure = 28;
+        private const eFuelType k_TruckFuelType = eFuelType.Soler;
 
         public Truck(bool i_ContainsToxins, float i_CargoTankVolume, eEngineType i_EngineType, string i_LicenseNumber,
                                         string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, object i_Engine)
@@ -24,9 +25,11 @@ namespace Ex03.GarageLogic
         internal override void FillUp(float i_AmountToFill)
         {
 
+            (Engine as FuelEngine).FillUp(i_AmountToFill, k_TruckFuelType);
+
+            calculateRemainingEnergy();
         }
-
-
+ 
         public override string ToString()
         {
             string baseInfo = base.ToString();

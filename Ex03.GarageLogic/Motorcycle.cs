@@ -13,6 +13,7 @@ namespace Ex03.GarageLogic
         private readonly eLicenseType r_LicenseType;
         private const int k_NumOfWheels = 2;
         private const int k_MaxAirPressure = 33;
+        private const eFuelType k_MotorcycleFuelType = eFuelType.Octane98;
 
         public Motorcycle(eLicenseType i_LicenseType, int i_EngineVolume, eEngineType i_EngineType, string i_LicenseNumber,
                                         string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, object i_Engine)
@@ -25,7 +26,15 @@ namespace Ex03.GarageLogic
 
         internal override void FillUp(float i_AmountToFill)
         {
-
+            if (EngineType is eEngineType.Fuel)
+            {
+                (Engine as FuelEngine).FillUp(i_AmountToFill, k_MotorcycleFuelType);
+            }
+            else
+            {
+                (Engine as ElectricEngine).FillUp(i_AmountToFill);
+            }
+            calculateRemainingEnergy();
         }
 
         public override string ToString()

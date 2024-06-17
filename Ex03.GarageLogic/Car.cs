@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
         private eColor m_CarColor;
         private const int k_NumOfWheels = 4;
         private const int k_MaxAirPressure = 31;
-        private readonly eFuelType m_CarFuelType = eFuelType.Octane95;
+        private const eFuelType k_CarFuelType = eFuelType.Octane95;
 
         public Car(eColor i_Color, int i_NumOfDoors, eEngineType i_EngineType, string i_LicenseNumber,
                       string i_ModelName, string i_Owner, string i_PhoneNumber, List<(string manufacturerName, float currentAirPressure)> i_WheelDataList, object i_Engine)
@@ -22,14 +22,13 @@ namespace Ex03.GarageLogic
         {
            if(EngineType is eEngineType.Fuel)
             {
-                FuelEngine engine = Engine as FuelEngine;
-                engine.FillUp(i_AmountToFill, m_CarFuelType);
+                (Engine as FuelEngine).FillUp(i_AmountToFill, k_CarFuelType);
             }
            else
             {
-                ElectricEngine engine = Engine as ElectricEngine;
-                engine.FillUp(i_AmountToFill);
+                (Engine as ElectricEngine).FillUp(i_AmountToFill);
             }
+
            calculateRemainingEnergy();
         }
 
