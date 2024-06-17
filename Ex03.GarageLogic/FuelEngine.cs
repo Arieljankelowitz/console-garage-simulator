@@ -28,6 +28,10 @@ namespace Ex03.GarageLogic
         public FuelEngine(eFuelType i_FuelType, float i_CurrentFuel, float i_MaxFuel)
         {
             r_FuelType = i_FuelType;
+            if(i_CurrentFuel > i_MaxFuel)
+            {
+                throw new ValueOutOfRangeException("Exceeded the Maximum Fuel");
+            }
             m_CurrentFuel = i_CurrentFuel;
             r_MaxFuel = i_MaxFuel;
         }

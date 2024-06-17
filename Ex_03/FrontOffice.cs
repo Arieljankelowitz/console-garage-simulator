@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Ex03.GarageLogic;
 
 namespace Ex_03
@@ -67,7 +68,7 @@ namespace Ex_03
                 vehicleLicenses = r_Garage.VehiclesInGarage;
             }
 
-            foreach (string vehicleLicense in vehicleLicenses) 
+            foreach (string vehicleLicense in vehicleLicenses)
             {
                 Console.WriteLine(vehicleLicense);
             }
@@ -99,7 +100,7 @@ namespace Ex_03
                 r_Garage.PumpTires(vehicleLicense);
                 Console.WriteLine("Successfully filled tires");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Invalid License Number, unable to fill up tires.");
             }
@@ -124,7 +125,7 @@ namespace Ex_03
                 float.TryParse(litersGivenToAdd, out float litersToAdd);
                 r_Garage.Refuel(vehicleLicense, chosenFuel, litersToAdd);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -191,7 +192,6 @@ namespace Ex_03
                     wheelDataList = ConnsoleUtil.CollectIndividualWheelData(i_NumOfWheelsToAdd);
                 }
 
-                Console.WriteLine("Wheel data collected successfully.");
             }
             catch (Exception ex)
             {
@@ -203,87 +203,159 @@ namespace Ex_03
 
         private void registerNewVehicle(string i_VehicleType, string i_LicenseNumber)
         {
-            List<(string manufacturerName, float currentAirPressure)> wheelDataList;
-            int numOfWheelsToAdd;
-
-            string ownerName, phoneNumber, vehicleModel;
-            getOwnerDetails(i_VehicleType, out ownerName, out phoneNumber, out vehicleModel);
-
-            Console.Clear();
+            var (ownerName, phoneNumber, vehicleModel) = collectOwnerDetails(i_VehicleType);
 
             if (i_VehicleType.Contains("Car"))
             {
-                numOfWheelsToAdd = 4;
-                (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
-                Console.Clear();
-                wheelDataList = collectWheelData(numOfWheelsToAdd);
-                Console.Clear();
-
-                if (i_VehicleType.Contains("Electric"))
-                {
-                    float currentBatteryLife = ConnsoleUtil.NewElectric();
-                    r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                      wheelDataList, currentBatteryLife);
-
-                    vehicleRegistered();
-                }
-                else
-                {
-
-                    float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-
-                    r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                        wheelDataList, i_CurrentFuel: currentFuel);
-
-                    vehicleRegistered();
-                }
+                handleCarRegistration(i_VehicleType, i_LicenseNumber, ownerName, phoneNumber, vehicleModel);
             }
             else if (i_VehicleType.Contains("Motorcycle"))
             {
-                numOfWheelsToAdd = 2;
-                wheelDataList = collectWheelData(numOfWheelsToAdd);
-
-                (eLicenseType LicenseType, int EngineVolume) motorcycleInfo = ConnsoleUtil.NewMotorcycle();
-                if (i_VehicleType.Contains("Electric"))
-                {
-                    float currentBatteryLife = ConnsoleUtil.NewElectric();
-                    r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
-            vehicleModel, ownerName, phoneNumber, wheelDataList, currentBatteryLife);
-
-                    vehicleRegistered();
-                }
-                else
-                {
-                    float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                    r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                         wheelDataList, i_CurrentFuel: currentFuel);
-
-                    vehicleRegistered();
-                }
+                handleMotorcycleRegistration(i_VehicleType, i_LicenseNumber, ownerName, phoneNumber, vehicleModel);
             }
             else if (i_VehicleType.Contains("Truck"))
             {
-                numOfWheelsToAdd = 12;
-                wheelDataList = collectWheelData(numOfWheelsToAdd);
-
-                (bool containsDangerousMaterials, float cargoTankVolume) truckInfo = ConnsoleUtil.NewTruck();
-                float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                r_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
-                        wheelDataList, i_CurrentFuel: currentFuel);
-
-                vehicleRegistered();
+                handleTruckRegistration(i_LicenseNumber, ownerName, phoneNumber, vehicleModel);
+            }
+            else
+            {
+                Console.WriteLine("Unknown vehicle type.");
             }
         }
 
-        private static void getOwnerDetails(string i_VehicleType, out string o_OwnerName, out string o_PhoneNumber, out string o_VehicleModel)
+        
+
+
+        private void handleCarRegistration(string i_VehicleType, string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
         {
-            Console.WriteLine("Thank you for choosing our Garage, lets start registering");
+            int numOfWheelsToAdd = 4;
+            (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
+            Console.Clear();
+           
+
+            bool isCreated = false;
+            while (!isCreated)
+            {
+                try
+                {
+                    List<(string manufacturerName, float currentAirPressure)> wheelDataList = collectWheelData(numOfWheelsToAdd);
+                    
+                    if (i_VehicleType.Contains("Electric"))
+                    {
+                       
+                        float currentBatteryLife = ConnsoleUtil.NewElectric();
+                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                                                  wheelDataList, currentBatteryLife);
+                    }
+                    else
+                    {
+                        float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                                                  wheelDataList, i_CurrentFuel: currentFuel);
+                    }
+
+                    vehicleRegistered();
+                    isCreated = true;
+                }
+                catch (Exception ex)
+                {
+                    HandleRegistrationException(ex);
+                }
+            }
+        }
+
+        private void handleMotorcycleRegistration(string i_VehicleType, string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
+        {
+            int numOfWheelsToAdd = 2;
+           
+            Console.Clear();
+            (eLicenseType LicenseType, int EngineVolume) motorcycleInfo = ConnsoleUtil.NewMotorcycle();
+
+            bool isCreated = false;
+            while (!isCreated)
+            {
+                try
+                {
+                    List<(string manufacturerName, float currentAirPressure)> wheelDataList = collectWheelData(numOfWheelsToAdd);
+                   
+                    if (i_VehicleType.Contains("Electric"))
+                    {
+                        float currentBatteryLife = ConnsoleUtil.NewElectric();
+                        m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
+                                                  vehicleModel, ownerName, phoneNumber, wheelDataList, currentBatteryLife);
+                    }
+                    else
+                    {
+                        float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+                        m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber,
+                                                  vehicleModel, ownerName, phoneNumber, wheelDataList, i_CurrentFuel: currentFuel);
+                    }
+
+                    vehicleRegistered();
+                    isCreated = true;
+                }
+                catch (Exception ex)
+                {
+                    HandleRegistrationException(ex);
+                }
+            }
+        }
+
+        private void handleTruckRegistration(string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
+        {
+            int numOfWheelsToAdd = 12;
+           
+            Console.Clear();
+            (bool containsDangerousMaterials, float cargoTankVolume) truckInfo = ConnsoleUtil.NewTruck();
+            bool isCreated = false;
+            while (!isCreated)
+            {
+                try
+                {
+                    List<(string manufacturerName, float currentAirPressure)> wheelDataList = collectWheelData(numOfWheelsToAdd);
+                    float currentFuel = ConnsoleUtil.CurrentFuelAmount();
+                    m_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                                              wheelDataList, i_CurrentFuel: currentFuel);
+
+                    vehicleRegistered();
+                    isCreated = true;
+                }
+                catch (Exception ex)
+                {
+                    HandleRegistrationException(ex);
+                }
+            }
+        }
+
+        private void HandleRegistrationException(Exception ex)
+        {
+            if (ex is ValueOutOfRangeException || ex is ArgumentException)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Please provide a valid input.");
+               
+            }
+            else
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Console.WriteLine("Please try again later.");
+            }
+        }
+
+        private (string ownerName, string phoneNumber, string vehicleModel) collectOwnerDetails(string i_VehicleType)
+        {
+            Console.WriteLine("Thank you for choosing our Garage, let's start registering");
             Console.WriteLine("Please enter your name: ");
-            o_OwnerName = Console.ReadLine();
+            string ownerName = Console.ReadLine();
+
             Console.WriteLine("Please enter your phone number: ");
-            o_PhoneNumber = Console.ReadLine();
-            Console.WriteLine("Please enter the {0}'s model: ", i_VehicleType);
-            o_VehicleModel = Console.ReadLine();
+            string phoneNumber = Console.ReadLine();
+
+            Console.WriteLine($"Please enter the {i_VehicleType}'s model: ");
+            string vehicleModel = Console.ReadLine();
+            Console.Clear();
+
+            return (ownerName, phoneNumber, vehicleModel);
         }
 
         private static void vehicleRegistered()

@@ -78,8 +78,11 @@ namespace Ex03.GarageLogic
 
             if (i_EngineType is eEngineType.Electric)
             {
-                const float k_MaxBatteryLife = 2.5f;
-                motorcycleEngine = new ElectricEngine(k_MaxBatteryLife, i_CurrentBatteryLife);
+               
+                    const float k_MaxBatteryLife = 2.5f;
+                    motorcycleEngine = new ElectricEngine(k_MaxBatteryLife, i_CurrentBatteryLife);
+              
+
             }
             else if (i_EngineType is eEngineType.Fuel)
             {

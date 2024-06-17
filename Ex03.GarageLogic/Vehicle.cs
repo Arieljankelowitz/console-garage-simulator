@@ -63,21 +63,13 @@ namespace Ex03.GarageLogic
             {
                 var wheelData = i_WheelDataList.Count > 1 ?  i_WheelDataList[i] : i_WheelDataList[0];
 
-                try
+               
+                Wheel newWheel = new Wheel(wheelData.manufacturerName, i_MaxAirPressure)
                 {
-                    Wheel newWheel = new Wheel(wheelData.manufacturerName, i_MaxAirPressure)
-                    {
-                        CurrentAirPressure = wheelData.currentAirPressure,
-                    };
+                    CurrentAirPressure = wheelData.currentAirPressure,
+                };
 
-                    r_Wheels.Add(newWheel);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                
-                
+                r_Wheels.Add(newWheel);
             }
         }
 
