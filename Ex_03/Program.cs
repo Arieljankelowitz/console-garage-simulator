@@ -1,19 +1,12 @@
-﻿
-
-using Ex_03;
-using Ex03.GarageLogic;
+﻿using Ex_03;
 using System;
-using System.Runtime.InteropServices;
-
 
 namespace GarageLogic
-
 {
     public class Program
     {
         public static void Main()
         {
-            
             run();
         }
 

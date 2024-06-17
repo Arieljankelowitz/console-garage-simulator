@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Ex03.GarageLogic;
 
 namespace Ex_03
@@ -8,8 +7,8 @@ namespace Ex_03
     internal class FrontOffice
     {
         private readonly Garage r_Garage;
-        public bool BeingServiced { get; set; }
-        public FrontOffice()
+        internal bool BeingServiced { get; set; }
+        internal FrontOffice()
         {
             r_Garage = new Garage();
             BeingServiced = true;
@@ -18,7 +17,6 @@ namespace Ex_03
         {
             string welcomeMsg = "Welcome to the Garage!";
             Console.WriteLine(welcomeMsg);
-
         }
 
         internal string ChooseService()
@@ -30,7 +28,6 @@ namespace Ex_03
             string chosenService = ConnsoleUtil.ChooseOption(k_PleaseSelectAService, serviceOptions, k_OptionsPerLine);
 
             return chosenService;
-
         }
 
         internal void InsertVehicle()
@@ -55,18 +52,7 @@ namespace Ex_03
             string[] filterOptions = { "All", "In Repair", "Repaired", "Payed For" };
             string filter = ConnsoleUtil.ChooseOption(k_FilterVehiclesBasedOn, filterOptions);
 
-            List<string> vehicleLicenses;
-
-
-            try
-            {
-                eVehicleStatus filterStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(filter.Replace(" ", ""));
-                vehicleLicenses = r_Garage.FilterVehicles(filterStatus);
-            }
-            catch (Exception ex)
-            {
-                vehicleLicenses = r_Garage.VehiclesInGarage;
-            }
+            List<string> vehicleLicenses = filterVehiclesVehicleLicenses(filter);
 
             foreach (string vehicleLicense in vehicleLicenses)
             {
@@ -74,20 +60,44 @@ namespace Ex_03
             }
         }
 
+        private List<string> filterVehiclesVehicleLicenses(string i_Filter)
+        {
+            List<string> vehicleLicenses;
+            try
+            {
+                eVehicleStatus filterStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(i_Filter.Replace(" ", ""));
+                vehicleLicenses = r_Garage.FilterVehicles(filterStatus);
+            }
+            catch (Exception ex)
+            {
+                vehicleLicenses = r_Garage.VehiclesInGarage;
+            }
+
+            return vehicleLicenses;
+        }
+
         internal void ChangeStatus()
         {
-            Console.WriteLine("Please enter the license number of the vehicle you'd like to update: ");
-            string vehicleLicense = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Please enter the license number of the vehicle you'd like to update: ");
+                string vehicleLicense = Console.ReadLine();
 
-            const string k_SelectTheNewStatus = "select the new status";
-            string[] statusOptions = { "In Repair", "Repaired", "Payed For" };
-            string updatedStatusString = ConnsoleUtil.ChooseOption(k_SelectTheNewStatus, statusOptions).Replace(" ", "");
-            eVehicleStatus updatedStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(updatedStatusString);
+                const string k_SelectTheNewStatus = "select the new status";
+                string[] statusOptions = { "In Repair", "Repaired", "Payed For" };
+                string updatedStatusString =
+                    ConnsoleUtil.ChooseOption(k_SelectTheNewStatus, statusOptions).Replace(" ", "");
+                eVehicleStatus updatedStatus = ConnsoleUtil.ParseEnum<eVehicleStatus>(updatedStatusString);
 
-            r_Garage.ChangeStatus(updatedStatus, vehicleLicense);
+                r_Garage.ChangeStatus(updatedStatus, vehicleLicense);
 
-            Console.Clear();
-            Console.WriteLine("Status Updated.");
+                Console.Clear();
+                Console.WriteLine("Status Updated.");
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine("Invalid license number. Couldn't update status.");
+            }
         }
 
         internal void FillTires()
@@ -106,7 +116,6 @@ namespace Ex_03
             }
         }
 
-
         internal void Refuel()
         {
             Console.WriteLine("Please enter the license number of the vehicle you'd like to fill up: ");
@@ -117,11 +126,10 @@ namespace Ex_03
             string chosenFuelString = ConnsoleUtil.ChooseOption(k_SelectTheNewStatus, fuelOptions).Replace(" ", "");
             eFuelType chosenFuel = ConnsoleUtil.ParseEnum<eFuelType>(chosenFuelString);
             Console.WriteLine("How many litres to add?");
-            
-            
+            string litersGivenToAdd = Console.ReadLine();
+
             try
             {
-                string litersGivenToAdd = Console.ReadLine();
                 float.TryParse(litersGivenToAdd, out float litersToAdd);
                 r_Garage.Refuel(vehicleLicense, chosenFuel, litersToAdd);
             }
@@ -191,7 +199,6 @@ namespace Ex_03
                 {
                     wheelDataList = ConnsoleUtil.CollectIndividualWheelData(i_NumOfWheelsToAdd);
                 }
-
             }
             catch (Exception ex)
             {
@@ -223,15 +230,11 @@ namespace Ex_03
             }
         }
 
-        
-
-
-        private void handleCarRegistration(string i_VehicleType, string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
+        private void handleCarRegistration(string i_VehicleType, string i_LicenseNumber, string i_OwnerName, string i_PhoneNumber, string i_VehicleModel)
         {
             int numOfWheelsToAdd = 4;
             (eColor carColor, int carDoors) = ConnsoleUtil.NewCar();
             Console.Clear();
-           
 
             bool isCreated = false;
             while (!isCreated)
@@ -244,13 +247,13 @@ namespace Ex_03
                     {
                        
                         float currentBatteryLife = ConnsoleUtil.NewElectric();
-                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                        r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Electric, i_LicenseNumber, i_VehicleModel, i_OwnerName, i_PhoneNumber,
                                                   wheelDataList, currentBatteryLife);
                     }
                     else
                     {
                         float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                        m_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                        r_Garage.CreateNewVehicle(carColor, carDoors, eEngineType.Fuel, i_LicenseNumber, i_VehicleModel, i_OwnerName, i_PhoneNumber,
                                                   wheelDataList, i_CurrentFuel: currentFuel);
                     }
 
@@ -264,7 +267,7 @@ namespace Ex_03
             }
         }
 
-        private void handleMotorcycleRegistration(string i_VehicleType, string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
+        private void handleMotorcycleRegistration(string i_VehicleType, string i_LicenseNumber, string i_OwnerName, string i_PhoneNumber, string i_VehicleModel)
         {
             int numOfWheelsToAdd = 2;
            
@@ -281,14 +284,14 @@ namespace Ex_03
                     if (i_VehicleType.Contains("Electric"))
                     {
                         float currentBatteryLife = ConnsoleUtil.NewElectric();
-                        m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
-                                                  vehicleModel, ownerName, phoneNumber, wheelDataList, currentBatteryLife);
+                        r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Electric, i_LicenseNumber,
+                                                  i_VehicleModel, i_OwnerName, i_PhoneNumber, wheelDataList, currentBatteryLife);
                     }
                     else
                     {
                         float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                        m_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber,
-                                                  vehicleModel, ownerName, phoneNumber, wheelDataList, i_CurrentFuel: currentFuel);
+                        r_Garage.CreateNewVehicle(motorcycleInfo.LicenseType, motorcycleInfo.EngineVolume, eEngineType.Fuel, i_LicenseNumber,
+                                                  i_VehicleModel, i_OwnerName, i_PhoneNumber, wheelDataList, i_CurrentFuel: currentFuel);
                     }
 
                     vehicleRegistered();
@@ -301,7 +304,7 @@ namespace Ex_03
             }
         }
 
-        private void handleTruckRegistration(string i_LicenseNumber, string ownerName, string phoneNumber, string vehicleModel)
+        private void handleTruckRegistration(string i_LicenseNumber, string i_OwnerName, string i_PhoneNumber, string i_VehicleModel)
         {
             int numOfWheelsToAdd = 12;
            
@@ -314,7 +317,7 @@ namespace Ex_03
                 {
                     List<(string manufacturerName, float currentAirPressure)> wheelDataList = collectWheelData(numOfWheelsToAdd);
                     float currentFuel = ConnsoleUtil.CurrentFuelAmount();
-                    m_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, vehicleModel, ownerName, phoneNumber,
+                    r_Garage.CreateNewVehicle(truckInfo.containsDangerousMaterials, truckInfo.cargoTankVolume, eEngineType.Fuel, i_LicenseNumber, i_VehicleModel, i_OwnerName, i_PhoneNumber,
                                               wheelDataList, i_CurrentFuel: currentFuel);
 
                     vehicleRegistered();
@@ -327,17 +330,17 @@ namespace Ex_03
             }
         }
 
-        private void HandleRegistrationException(Exception ex)
+        internal void HandleRegistrationException(Exception i_Exception)
         {
-            if (ex is ValueOutOfRangeException || ex is ArgumentException)
+            if (i_Exception is ValueOutOfRangeException || i_Exception is ArgumentException)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {i_Exception.Message}");
                 Console.WriteLine("Please provide a valid input.");
                
             }
             else
             {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Console.WriteLine($"An unexpected error occurred: {i_Exception.Message}");
                 Console.WriteLine("Please try again later.");
             }
         }
